@@ -1,4 +1,4 @@
-import { ScraperErrorType } from "../../interface";
+import { ScraperErrorType } from "../interface";
 
 /**
  * Defines errors encountered by the scraper

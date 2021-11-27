@@ -3,13 +3,15 @@ import React from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { ScrapeRequest } from "./src/interface";
 import runScraper from "./src/scraper";
+import { MOODLE_PASSWORD, MOODLE_USERNAME } from "./testCredz";
 
 async function doScrape() {
   const params: ScrapeRequest = {
-    username: process.env.USERNAME as string,
-    password: process.env.PASSWORD as string,
+    username: MOODLE_USERNAME as string,
+    password: MOODLE_PASSWORD as string,
     courses: ["https://moodle.hku.hk/course/view.php?id=88357"],
   };
+  console.log(params);
   const response = await runScraper(params);
   console.log(response);
 }

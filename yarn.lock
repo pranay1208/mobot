@@ -2527,7 +2527,7 @@
   "resolved" "https://registry.npmjs.org/expo-application/-/expo-application-4.0.0.tgz"
   "version" "4.0.0"
 
-"expo-asset@^8.4.3", "expo-asset@~8.4.3":
+"expo-asset@~8.4.3":
   "integrity" "sha512-cnMXzmJUndLFocflq1d/WzmGB5cbzoDhwqs8v9eNwkZVY/BOIODvsI56fY+s0mKL4KpmE3+sV2VTbyYFBbF3Tw=="
   "resolved" "https://registry.npmjs.org/expo-asset/-/expo-asset-8.4.3.tgz"
   "version" "8.4.3"

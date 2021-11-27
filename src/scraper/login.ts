@@ -176,7 +176,7 @@ const finalAuthReq = async (
     }
 
     const returnCookie: string[] = [];
-    for (const ck of (err.response.headers["set-cookie"] as string[]) || []) {
+    for (const ck of err.response.headers["set-cookie"] as string[]) {
       if (ck.includes("MoodleSession")) {
         returnCookie.push(ck);
       }

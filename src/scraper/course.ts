@@ -1,3 +1,5 @@
+//* HTML scraper for the general course page
+
 import * as cheerio from "cheerio";
 import { ModuleType, ScrapeResponse } from "../interface";
 import { ScraperError, UNEXPECTED_DATA } from "../utils/error";

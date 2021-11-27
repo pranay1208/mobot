@@ -1,3 +1,5 @@
+//* HTML Scraper for individual module pages
+
 import * as cheerio from "cheerio";
 import Constants from "./constants";
 

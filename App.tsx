@@ -24,7 +24,9 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
-      <Button title='Scrape' onPress={doScrape} />
+      <View style={{ padding: "20px" }}>
+        <Button title='Scrape' onPress={doScrape} />
+      </View>
       <StatusBar style='auto' />
     </View>
   );

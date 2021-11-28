@@ -1,10 +1,10 @@
 /**
  * This interface indicates the relevant information required to run a scrape, i.e. login credentials and which courses to retrieve information for
  */
-export interface ScrapeRequest {
-  username: string;
-  password: string;
-  courses: string[];
+export interface ScrapeBody {
+  username?: string;
+  password?: string;
+  courses?: string;
 }
 
 /**

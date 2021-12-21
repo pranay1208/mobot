@@ -1,7 +1,8 @@
 import { StatusBar } from "expo-status-bar";
+import { Box, NativeBaseProvider } from "native-base";
 import React from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
 import { Provider } from "react-redux";
+import MainCoursePage from "./src/pages/courses/MainCoursePage";
 
 import { reduxStore, useAppDispatch, useAppSelector } from "./src/redux";
 import { decrement, increment } from "./src/redux/actions/testActions";
@@ -12,15 +13,9 @@ function AppContent() {
   const dispatch = useAppDispatch();
 
   return (
-    <View style={styles.container}>
-      {/* <Text>Open up App.tsx to start working on your app!</Text> */}
-      <View style={{ padding: "20px" }}>
-        <Button title='-' onPress={() => dispatch(decrement())} />
-        <Text style={{ paddingHorizontal: "20px" }}>Value: {counter}</Text>
-        <Button title='+' onPress={() => dispatch(increment())} />
-      </View>
-      <StatusBar style='auto' />
-    </View>
+    <NativeBaseProvider>
+      <MainCoursePage />
+    </NativeBaseProvider>
   );
 }
 
@@ -31,12 +26,3 @@ export default function App() {
     </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

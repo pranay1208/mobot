@@ -1,8 +1,8 @@
 import React from "react";
-import { Box, Button } from "native-base";
+import { Box } from "native-base";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import CourseCard from "../../components/courses/courseCard";
-import { RootDrawerParamList } from "../../navigatorInterfaces";
+import { RootDrawerParamList } from "../../interfaces/navigatorInterfaces";
 
 type Props = DrawerScreenProps<RootDrawerParamList, "Courses">;
 

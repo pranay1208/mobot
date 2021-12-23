@@ -6,15 +6,42 @@ import {
   SettingsModalHeader,
 } from "./ModalCommons";
 import { PRIMARY_BLUE } from "../../colours.styles";
+import { useAppDispatch, useAppSelector } from "../../redux";
+import {
+  unsaveCredentialsAction,
+  saveCredentialsAction,
+} from "../../redux/actions/settingsActions";
+
+const CHECKBOX_VALUE = "save";
 
 const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
-  const [saveCredentials, setSaveCredentials] = React.useState([]);
+  const credentials = useAppSelector((state) => state.credentials);
+  const dispatch = useAppDispatch();
+  const saveCredentialsInitValue =
+    credentials.username !== "" || credentials.password !== ""
+      ? [CHECKBOX_VALUE]
+      : [];
+
+  const [saveCredentials, setSaveCredentials] = React.useState(
+    saveCredentialsInitValue
+  );
   const shouldNotTakeCreds = saveCredentials.length === 0;
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = React.useState(
+    shouldNotTakeCreds ? "" : credentials.username
+  );
+  const [password, setPassword] = React.useState(
+    shouldNotTakeCreds ? "" : credentials.password
+  );
+
+  const onClosedCleanup = () => {
+    setUsername(credentials.username);
+    setPassword(credentials.password);
+    setSaveCredentials(saveCredentialsInitValue);
+    onClose(false);
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='lg'>
+    <Modal isOpen={isOpen} onClose={onClosedCleanup} size='lg'>
       <Modal.Content>
         <SettingsModalCloseButton />
         <SettingsModalHeader title='Credentials' />
@@ -47,7 +74,7 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
             value={saveCredentials}
             onChange={setSaveCredentials}
           >
-            <Checkbox value='save' size='md'>
+            <Checkbox value={CHECKBOX_VALUE} size='md'>
               Remember Credentials
             </Checkbox>
           </Checkbox.Group>
@@ -57,11 +84,23 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
             <Button
               variant='ghost'
               colorScheme='blueGray'
-              onPress={() => onClose(false)}
+              onPress={() => onClosedCleanup()}
             >
               Cancel
             </Button>
-            <Button bgColor={PRIMARY_BLUE}>Save</Button>
+            <Button
+              bgColor={PRIMARY_BLUE}
+              onPress={() => {
+                if (shouldNotTakeCreds) {
+                  dispatch(unsaveCredentialsAction());
+                } else {
+                  dispatch(saveCredentialsAction(username, password));
+                }
+                onClose(false);
+              }}
+            >
+              Save
+            </Button>
           </Button.Group>
         </Modal.Footer>
       </Modal.Content>

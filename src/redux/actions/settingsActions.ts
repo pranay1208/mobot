@@ -1,8 +1,6 @@
-//ACTION NAMES
-export const SAVE_CREDENTIALS = "SAVE_CREDENTIALS";
-export const UNSAVE_CREDENTIALS = "UNSAVE_CREDENTIALS";
+import { SAVE_CREDENTIALS, UNSAVE_CREDENTIALS } from "./actionNames";
 
-//ACTIONS
+// CREDENTIAL ACTIONS
 export const saveCredentialsAction = (username: string, password: string) => {
   return {
     type: SAVE_CREDENTIALS,
@@ -15,3 +13,7 @@ export const unsaveCredentialsAction = () => {
     type: UNSAVE_CREDENTIALS,
   };
 };
+
+// COURSES ACTIONS
+
+// NOTIFICATIONS ACTIONS

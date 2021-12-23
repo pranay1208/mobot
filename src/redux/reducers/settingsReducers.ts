@@ -1,8 +1,9 @@
 import { AnyAction } from "redux";
 import {
+  CLEAR_ALL_DATA,
   SAVE_CREDENTIALS,
   UNSAVE_CREDENTIALS,
-} from "../actions/settingsActions";
+} from "../actions/actionNames";
 
 interface CredentialStorage {
   username: string;
@@ -24,6 +25,7 @@ export const credentialReducer = (
         username: action.payload.username,
         password: action.payload.password,
       };
+    case CLEAR_ALL_DATA:
     case UNSAVE_CREDENTIALS:
       return {
         username: "",

@@ -26,6 +26,11 @@ const SettingsPage = () => {
       text: "About",
       onClickAction: () => {},
     },
+    //TODO: This is the last thing to implement so we can set CLEAR_ALL_DATA on each reducer
+    {
+      text: "Clear Data",
+      onClickAction: () => {},
+    },
   ];
   return (
     <>

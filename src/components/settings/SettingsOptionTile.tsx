@@ -1,6 +1,5 @@
 import { Box, Pressable, Text } from "native-base";
 import React from "react";
-import { BACKGROUND_WHITE } from "../../colours.styles";
 
 export interface SettingOptionTileInterface {
   onClickAction: () => void;

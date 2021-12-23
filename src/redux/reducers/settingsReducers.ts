@@ -1,6 +1,9 @@
 import { AnyAction } from "redux";
 import {
+  ADD_NEW_COURSE,
   CLEAR_ALL_DATA,
+  DELETE_COURSE,
+  EDIT_COURSE_INFO,
   SAVE_CREDENTIALS,
   UNSAVE_CREDENTIALS,
 } from "../actions/actionNames";
@@ -31,6 +34,41 @@ export const credentialReducer = (
         username: "",
         password: "",
       };
+    default:
+      return state;
+  }
+};
+
+interface CourseSettingState {
+  courseName: string;
+  courseUrl: string;
+}
+
+export const coursesReducer = (
+  state: CourseSettingState[] = [],
+  action: AnyAction
+): CourseSettingState[] => {
+  switch (action.type) {
+    case ADD_NEW_COURSE:
+      return [
+        ...state,
+        {
+          courseName: action.payload.courseName,
+          courseUrl: action.payload.courseUrl,
+        },
+      ];
+    case EDIT_COURSE_INFO:
+      return state.map((val, index) => {
+        if (index !== action.payload.courseIndex) {
+          return val;
+        }
+        return {
+          courseName: action.payload.courseName,
+          courseUrl: action.payload.courseUrl,
+        };
+      });
+    case DELETE_COURSE:
+      return state.filter((_, index) => index !== action.payload.courseIndex);
     default:
       return state;
   }

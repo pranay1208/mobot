@@ -1,4 +1,10 @@
-import { SAVE_CREDENTIALS, UNSAVE_CREDENTIALS } from "./actionNames";
+import {
+  ADD_NEW_COURSE,
+  DELETE_COURSE,
+  EDIT_COURSE_INFO,
+  SAVE_CREDENTIALS,
+  UNSAVE_CREDENTIALS,
+} from "./actionNames";
 
 // CREDENTIAL ACTIONS
 export const saveCredentialsAction = (username: string, password: string) => {
@@ -15,5 +21,34 @@ export const unsaveCredentialsAction = () => {
 };
 
 // COURSES ACTIONS
+export const addCourseAction = (name: string, url: string) => {
+  return {
+    type: ADD_NEW_COURSE,
+    payload: {
+      courseName: name,
+      courseUrl: url,
+    },
+  };
+};
+
+export const deleteCourseAction = (i: number) => {
+  return {
+    type: DELETE_COURSE,
+    payload: {
+      courseIndex: i,
+    },
+  };
+};
+
+export const editCourseAction = (i: number, name: string, url: string) => {
+  return {
+    type: EDIT_COURSE_INFO,
+    payload: {
+      courseIndex: i,
+      courseName: name,
+      courseUrl: url,
+    },
+  };
+};
 
 // NOTIFICATIONS ACTIONS

@@ -8,7 +8,7 @@ import SettingOptionTile, {
 
 const SettingsPage = () => {
   const [credModal, setCredModal] = React.useState(false);
-  const [coursesModal, setCourseModal] = React.useState(true);
+  const [coursesModal, setCourseModal] = React.useState(false);
   const listData: SettingOptionTileInterface[] = [
     {
       text: "Credentials",

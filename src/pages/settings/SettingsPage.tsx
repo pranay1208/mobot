@@ -6,7 +6,7 @@ import SettingOptionTile, {
 } from "../../components/settings/SettingsOptionTile";
 
 const SettingsPage = () => {
-  const [credModal, setCredModal] = React.useState(false);
+  const [credModal, setCredModal] = React.useState(true);
   const listData: SettingOptionTileInterface[] = [
     {
       text: "Credentials",

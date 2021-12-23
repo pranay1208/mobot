@@ -47,8 +47,12 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
         <SettingsModalHeader title='Credentials' />
         <Modal.Body>
           <FormControl>
-            <FormControl.Label>Username</FormControl.Label>
+            <FormControl.Label fontWeight='bold'>
+              Moodle Username
+            </FormControl.Label>
             <Input
+              borderWidth={shouldNotTakeCreds ? "0" : "1"}
+              borderColor='black'
               size='md'
               placeholder='Username'
               isDisabled={shouldNotTakeCreds}
@@ -58,8 +62,12 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
             />
           </FormControl>
           <FormControl>
-            <FormControl.Label>Password</FormControl.Label>
+            <FormControl.Label fontWeight='bold'>
+              Moodle Password
+            </FormControl.Label>
             <Input
+              borderWidth={shouldNotTakeCreds ? "0" : "1"}
+              borderColor='black'
               size='md'
               type='password'
               placeholder='Password'
@@ -74,7 +82,7 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
             value={saveCredentials}
             onChange={setSaveCredentials}
           >
-            <Checkbox value={CHECKBOX_VALUE} size='md'>
+            <Checkbox value={CHECKBOX_VALUE} size='md' colorScheme='darkBlue'>
               Remember Credentials
             </Checkbox>
           </Checkbox.Group>
@@ -93,10 +101,11 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
               onPress={() => {
                 if (shouldNotTakeCreds) {
                   dispatch(unsaveCredentialsAction());
+                  onClosedCleanup();
                 } else {
                   dispatch(saveCredentialsAction(username, password));
+                  onClose(false);
                 }
-                onClose(false);
               }}
             >
               Save

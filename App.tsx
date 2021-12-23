@@ -13,6 +13,7 @@ import { RootDrawerParamList } from "./src/interfaces/navigatorInterfaces";
 import NotificationListPage from "./src/pages/notifications/NotificationListPage";
 import AppDrawer from "./src/components/AppDrawer";
 import { PRIMARY_BLUE } from "./src/colours.styles";
+import SettingsPage from "./src/pages/settings/SettingsPage";
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
@@ -24,7 +25,7 @@ function AppContent() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName='Notifications'
+          initialRouteName='Settings'
           drawerContent={(props) => <AppDrawer {...props} />}
           screenOptions={{
             headerTintColor: "#FFF",
@@ -55,7 +56,7 @@ function AppContent() {
           />
           <Drawer.Screen
             name='Settings'
-            component={NotificationListPage}
+            component={SettingsPage}
             options={{
               drawerIcon: ({ color, size }) => (
                 <Ionicons name='settings' color={color} size={size} />

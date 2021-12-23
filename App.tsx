@@ -53,6 +53,15 @@ function AppContent() {
               ),
             }}
           />
+          <Drawer.Screen
+            name='Settings'
+            component={NotificationListPage}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name='settings' color={color} size={size} />
+              ),
+            }}
+          />
         </Drawer.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

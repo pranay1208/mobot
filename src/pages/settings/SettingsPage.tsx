@@ -1,5 +1,6 @@
 import { FlatList } from "native-base";
 import React from "react";
+import CoursesModal from "../../components/settings/CoursesModal";
 import CredentialModal from "../../components/settings/CredentialModal";
 import SettingOptionTile, {
   SettingOptionTileInterface,
@@ -7,6 +8,7 @@ import SettingOptionTile, {
 
 const SettingsPage = () => {
   const [credModal, setCredModal] = React.useState(false);
+  const [coursesModal, setCourseModal] = React.useState(true);
   const listData: SettingOptionTileInterface[] = [
     {
       text: "Credentials",
@@ -16,7 +18,9 @@ const SettingsPage = () => {
     },
     {
       text: "Courses",
-      onClickAction: () => {},
+      onClickAction: () => {
+        setCourseModal(true);
+      },
     },
     {
       text: "Notifications",
@@ -44,6 +48,7 @@ const SettingsPage = () => {
         )}
       />
       <CredentialModal isOpen={credModal} onClose={setCredModal} />
+      <CoursesModal isOpen={coursesModal} onClose={setCourseModal} />
     </>
   );
 };

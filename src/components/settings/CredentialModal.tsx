@@ -41,7 +41,7 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClosedCleanup} size='lg'>
+    <Modal isOpen={isOpen} onClose={onClosedCleanup} size='xl'>
       <Modal.Content>
         <SettingsModalCloseButton />
         <SettingsModalHeader title='Credentials' />

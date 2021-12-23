@@ -13,7 +13,13 @@ import React from "react";
 import { BACKGROUND_WHITE, NOTIF_YELLOW } from "../../colours.styles";
 
 export interface CourseCardProps {
-  //Populate this with the name, progress etc of the course
+  courseTitle: string;
+  courseAlerts: number;
+  numberAssignments: number;
+  numberQuizzes: number;
+  numberResources: number;
+  totalModules: number;
+  completedModules: number;
 }
 
 const CourseInfoText = (props: { value: string }) => {
@@ -25,7 +31,9 @@ const CourseInfoText = (props: { value: string }) => {
 };
 
 const CourseCard = (props: CourseCardProps) => {
-  const progressValue = 70; //Completed divided by total multiplied by 100 (and round to integer)
+  const progressValue = Math.floor(
+    (props.completedModules / props.totalModules) * 100
+  );
   let progressColor = "";
   if (progressValue > 60) {
     progressColor = "emerald";
@@ -36,7 +44,7 @@ const CourseCard = (props: CourseCardProps) => {
   }
 
   return (
-    <Pressable marginX='3' marginY='0.5' onPress={() => console.log("Hello")}>
+    <Pressable marginX='3' marginY='2' onPress={() => console.log("Hello")}>
       <Box
         rounded='md'
         textOverflow='ellipsis'
@@ -50,24 +58,28 @@ const CourseCard = (props: CourseCardProps) => {
         <Stack direction='column' space={1}>
           <Box>
             <Heading size='sm' isTruncated>
-              STAT1603: Introduction to Statistics
+              {props.courseTitle}
             </Heading>
           </Box>
           <Stack direction='row' space={1} marginLeft='1.5'>
             <Stack direction='column' flex='5' space='0'>
-              <CourseInfoText value='4 Assignments' />
-              <CourseInfoText value='1 Quizzes' />
-              <CourseInfoText value='37 Resources' />
+              <CourseInfoText
+                value={`${props.numberAssignments} Assignments`}
+              />
+              <CourseInfoText value={`${props.numberQuizzes} Quizzes`} />
+              <CourseInfoText value={`${props.numberResources} Resources`} />
             </Stack>
             <Center flex={1}>
-              <Circle
-                bgColor={NOTIF_YELLOW}
-                size='8'
-                borderWidth='1'
-                borderColor='#15151540'
-              >
-                <Text color='white'>10</Text>
-              </Circle>
+              {props.courseAlerts === 0 || (
+                <Circle
+                  bgColor={NOTIF_YELLOW}
+                  size='8'
+                  borderWidth='1'
+                  borderColor='#15151540'
+                >
+                  <Text color='white'>{props.courseAlerts}</Text>
+                </Circle>
+              )}
             </Center>
           </Stack>
           <HStack alignItems='center'>

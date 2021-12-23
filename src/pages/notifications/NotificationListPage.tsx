@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, HStack, Pressable, Text, VStack } from "native-base";
+import { Box } from "native-base";
 import NotificationItem, {
   NotificationProp,
 } from "../../components/notifications/notificationItem";

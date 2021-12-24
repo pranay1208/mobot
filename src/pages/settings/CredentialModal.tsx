@@ -4,7 +4,7 @@ import {
   ModalParamInterface,
   SettingsModalCloseButton,
   SettingsModalHeader,
-} from "./ModalCommons";
+} from "../../components/settings/ModalCommons";
 import { PRIMARY_BLUE } from "../../colours.styles";
 import { useAppDispatch, useAppSelector } from "../../redux";
 import {

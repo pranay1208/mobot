@@ -1,7 +1,7 @@
 import { FlatList } from "native-base";
 import React from "react";
-import CoursesModal from "../../components/settings/CoursesModal";
-import CredentialModal from "../../components/settings/CredentialModal";
+import CoursesModal from "./CoursesModal";
+import CredentialModal from "./CredentialModal";
 import SettingOptionTile, {
   SettingOptionTileInterface,
 } from "../../components/settings/SettingsOptionTile";

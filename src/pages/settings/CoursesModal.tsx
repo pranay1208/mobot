@@ -4,14 +4,14 @@ import {
   ModalParamInterface,
   SettingsModalCloseButton,
   SettingsModalHeader,
-} from "./ModalCommons";
+} from "../../components/settings/ModalCommons";
 import { useAppSelector } from "../../redux";
 import {
   AddCourseModal,
   DeleteCourseConfirmationModal,
   EditCourseInfoModal,
   ModalCourseTile,
-} from "./IndividualCourseComponents";
+} from "../../components/settings/IndividualCourseComponents";
 import { PRIMARY_BLUE } from "../../colours.styles";
 
 const CoursesModal = ({ isOpen, onClose }: ModalParamInterface) => {

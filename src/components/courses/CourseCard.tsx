@@ -47,7 +47,6 @@ const CourseCard = (props: CourseCardProps) => {
     <Pressable marginX='3' marginY='2' onPress={() => console.log("Hello")}>
       <Box
         rounded='md'
-        textOverflow='ellipsis'
         borderColor='gray.300'
         borderWidth='1'
         shadow='6'

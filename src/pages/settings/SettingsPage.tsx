@@ -40,6 +40,7 @@ const SettingsPage = () => {
     <>
       <FlatList
         data={listData}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }: { item: SettingOptionTileInterface }) => (
           <SettingOptionTile
             text={item.text}

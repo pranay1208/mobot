@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "native-base";
 import NotificationItem, {
   NotificationProp,
-} from "../../components/notifications/notificationItem";
+} from "../../components/notifications/NotificationItem";
 import { SwipeListView } from "react-native-swipe-list-view";
 import NotificationSwipeHiddenContent from "../../components/notifications/NotificationSwipeHiddenContent";
 
@@ -25,7 +25,7 @@ const NotificationListPage = () => {
     },
   ];
   return (
-    <Box safeAreaTop>
+    <Box>
       <SwipeListView
         data={data}
         disableRightSwipe

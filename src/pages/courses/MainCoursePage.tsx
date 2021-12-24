@@ -3,7 +3,7 @@ import { Box, FlatList } from "native-base";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import CourseCard, {
   CourseCardProps,
-} from "../../components/courses/courseCard";
+} from "../../components/courses/CourseCard";
 import { RootDrawerParamList } from "../../interfaces/navigatorInterfaces";
 
 type Props = DrawerScreenProps<RootDrawerParamList, "Courses">;

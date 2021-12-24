@@ -163,6 +163,7 @@ export const EditCourseInfoModal = ({
           <FormControl isInvalid={courseUrl.trim() === ""}>
             <FormControl.Label>Course URL</FormControl.Label>
             <Input
+              isDisabled={true}
               value={courseUrl}
               onChangeText={setCourseUrl}
               placeholder='https://moodle.hku.hk/course/view.php?id=12345'

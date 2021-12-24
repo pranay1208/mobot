@@ -1,5 +1,13 @@
 import React from "react";
-import { Modal, Input, FormControl, Button, Checkbox } from "native-base";
+import {
+  Modal,
+  Input,
+  FormControl,
+  Button,
+  Checkbox,
+  Box,
+  Text,
+} from "native-base";
 import {
   ModalParamInterface,
   SettingsModalCloseButton,
@@ -46,6 +54,12 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
         <SettingsModalCloseButton />
         <SettingsModalHeader title='Credentials' />
         <Modal.Body>
+          <Box marginBottom='1'>
+            <Text>
+              You will be prompted on each scrape if you choose not to save
+              credentials. Uncheck anytime to remove stored credentials
+            </Text>
+          </Box>
           <FormControl>
             <FormControl.Label fontWeight='bold'>
               Moodle Username
@@ -55,8 +69,7 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
               borderColor='black'
               size='md'
               placeholder='Username'
-              isDisabled={shouldNotTakeCreds}
-              value={shouldNotTakeCreds ? "" : username}
+              value={username}
               onChangeText={setUsername}
               marginBottom='2'
             />
@@ -71,8 +84,7 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
               size='md'
               type='password'
               placeholder='Password'
-              isDisabled={shouldNotTakeCreds}
-              value={shouldNotTakeCreds ? "" : password}
+              value={password}
               onChangeText={setPassword}
               marginBottom='2'
             />

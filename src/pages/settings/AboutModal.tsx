@@ -25,7 +25,7 @@ const AboutModal = ({ isOpen, onClose }: ModalParamInterface) => {
             </Text>
             <Text fontSize='lg'>
               MoBot's application and the scraping API is open source and can be
-              accessed through the following links{" "}
+              accessed through the following links:{"\n"}
               <Link
                 href='https://github.com/pranay1208/mobot'
                 isUnderlined
@@ -35,8 +35,8 @@ const AboutModal = ({ isOpen, onClose }: ModalParamInterface) => {
                 }}
               >
                 Application
-              </Link>{" "}
-              and{" "}
+              </Link>
+              {"\n"}
               <Link
                 href='https://github.com/pranay1208/mobot_api'
                 isUnderlined

@@ -6,10 +6,12 @@ import SettingOptionTile, {
   SettingOptionTileInterface,
 } from "../../components/settings/SettingsOptionTile";
 import AboutModal from "./AboutModal";
+import NotificationModal from "./NotificationModal";
 
 const SettingsPage = () => {
   const [credModal, setCredModal] = React.useState(false);
   const [coursesModal, setCourseModal] = React.useState(false);
+  const [notifModal, setNotifModal] = React.useState(false);
   const [aboutModal, setAboutModal] = React.useState(false);
   const listData: SettingOptionTileInterface[] = [
     {
@@ -26,7 +28,9 @@ const SettingsPage = () => {
     },
     {
       text: "Notifications",
-      onClickAction: () => {},
+      onClickAction: () => {
+        setNotifModal(true);
+      },
     },
     {
       text: "About",
@@ -54,6 +58,7 @@ const SettingsPage = () => {
       />
       <CredentialModal isOpen={credModal} onClose={setCredModal} />
       <CoursesModal isOpen={coursesModal} onClose={setCourseModal} />
+      <NotificationModal isOpen={notifModal} onClose={setNotifModal} />
       <AboutModal isOpen={aboutModal} onClose={setAboutModal} />
     </>
   );

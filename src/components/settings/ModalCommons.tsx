@@ -18,5 +18,9 @@ export const SettingsModalHeader = ({ title }: { title: string }) => {
 };
 
 export const SettingsModalCloseButton = () => (
-  <Modal.CloseButton backgroundColor='white' />
+  <Modal.CloseButton
+    _icon={{
+      color: "white",
+    }}
+  />
 );

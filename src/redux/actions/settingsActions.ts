@@ -1,6 +1,8 @@
 import {
   ADD_NEW_COURSE,
+  ADD_NEW_NOTIFICATION,
   DELETE_COURSE,
+  DELETE_NOTIFICATION,
   EDIT_COURSE_INFO,
   SAVE_CREDENTIALS,
   UNSAVE_CREDENTIALS,
@@ -59,3 +61,16 @@ export const editCourseAction = (
 };
 
 // NOTIFICATIONS ACTIONS
+export const addNotificationDurationAction = (numDays: number) => {
+  return {
+    type: ADD_NEW_NOTIFICATION,
+    payload: { numDays },
+  };
+};
+
+export const deleteNotificationDurationAction = (numDays: number) => {
+  return {
+    type: DELETE_NOTIFICATION,
+    payload: { numDays },
+  };
+};

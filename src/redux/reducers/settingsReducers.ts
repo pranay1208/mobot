@@ -1,8 +1,10 @@
 import { AnyAction } from "redux";
 import {
   ADD_NEW_COURSE,
+  ADD_NEW_NOTIFICATION,
   CLEAR_ALL_DATA,
   DELETE_COURSE,
+  DELETE_NOTIFICATION,
   EDIT_COURSE_INFO,
   SAVE_CREDENTIALS,
   UNSAVE_CREDENTIALS,
@@ -72,6 +74,23 @@ export const coursesReducer = (
       });
     case DELETE_COURSE:
       return state.filter((_, index) => index !== action.payload.courseIndex);
+    default:
+      return state;
+  }
+};
+
+export const notificationsDurationReducer = (
+  state: number[] = [],
+  action: AnyAction
+) => {
+  switch (action.type) {
+    case ADD_NEW_NOTIFICATION:
+      if (state.includes(action.payload.numDays)) {
+        return state;
+      }
+      return [...state, action.payload.numDays];
+    case DELETE_NOTIFICATION:
+      return state.filter((days) => days !== action.payload.numDays);
     default:
       return state;
   }

@@ -59,6 +59,7 @@ const MainCoursePage = ({ navigation }: Props) => {
   return (
     <Box paddingY='4'>
       <FlatList
+        keyExtractor={(item, index) => index.toString()}
         data={data}
         renderItem={({ item }) => {
           return CourseCard(item);

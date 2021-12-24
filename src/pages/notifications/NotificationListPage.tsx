@@ -29,6 +29,7 @@ const NotificationListPage = () => {
       <SwipeListView
         data={data}
         disableRightSwipe
+        keyExtractor={(item, index) => index.toString()}
         renderItem={(data, rowMap) => (
           <NotificationItem
             notificationText={data.item.notificationText}

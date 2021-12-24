@@ -36,9 +36,11 @@ const CoursesModal = ({ isOpen, onClose }: ModalParamInterface) => {
         <Modal.Body>
           <FlatList
             data={listOfCourses}
+            keyExtractor={(_, index) => index.toString()}
             renderItem={({ item, index }) =>
               ModalCourseTile(
                 item.courseName,
+                item.courseColor,
                 index,
                 tileEditClick,
                 tileDeleteClick

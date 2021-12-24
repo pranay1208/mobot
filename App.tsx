@@ -19,7 +19,6 @@ const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
 //Edit this to add navigators and other content into the application
 function AppContent() {
-  const counter = useAppSelector((state) => state.test);
   const dispatch = useAppDispatch();
   return (
     <NativeBaseProvider>

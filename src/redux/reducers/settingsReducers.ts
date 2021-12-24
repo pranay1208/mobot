@@ -42,6 +42,7 @@ export const credentialReducer = (
 interface CourseSettingState {
   courseName: string;
   courseUrl: string;
+  courseColor: string;
 }
 
 export const coursesReducer = (
@@ -55,6 +56,7 @@ export const coursesReducer = (
         {
           courseName: action.payload.courseName,
           courseUrl: action.payload.courseUrl,
+          courseColor: action.payload.courseColor,
         },
       ];
     case EDIT_COURSE_INFO:
@@ -65,6 +67,7 @@ export const coursesReducer = (
         return {
           courseName: action.payload.courseName,
           courseUrl: action.payload.courseUrl,
+          courseColor: action.payload.courseColor,
         };
       });
     case DELETE_COURSE:

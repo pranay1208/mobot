@@ -9,6 +9,7 @@ import {
   FormControl,
   Input,
   useToast,
+  Center,
 } from "native-base";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
@@ -19,6 +20,7 @@ import {
 } from "./ModalCommons";
 import {
   BACKGROUND_WHITE,
+  LIST_OF_COURSE_COLORS,
   NOTIIF_RED,
   PRIMARY_BLUE,
 } from "../../colours.styles";
@@ -28,9 +30,11 @@ import {
   deleteCourseAction,
   editCourseAction,
 } from "../../redux/actions/settingsActions";
+import { ColorCircle, ColorCircleRow } from "./CourseColorSelector";
 
 export const ModalCourseTile = (
   courseName: string,
+  courseColor: string,
   courseIndex: number,
   editClick: (i: number) => void,
   deleteClick: (i: number) => void
@@ -38,6 +42,14 @@ export const ModalCourseTile = (
   return (
     <Box borderBottomWidth='1' borderBottomColor='gray.500' height='12'>
       <HStack paddingX='1' paddingY='2'>
+        <Center paddingBottom='1' paddingRight='3'>
+          <ColorCircle
+            currentColor=''
+            onChange={() => {}}
+            color={courseColor}
+            size={6}
+          />
+        </Center>
         <Text flex={1} isTruncated paddingRight='4' fontWeight='semibold'>
           {courseName}
         </Text>
@@ -140,6 +152,9 @@ export const EditCourseInfoModal = ({
   const [courseUrl, setCourseUrl] = React.useState(
     selectedTile?.courseUrl ?? ""
   );
+  const [courseColor, setCourseColor] = React.useState(
+    selectedTile.courseColor ?? ""
+  );
   const editToast = useToast();
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
@@ -174,6 +189,13 @@ export const EditCourseInfoModal = ({
               This is the course's URL on Moodle
             </FormControl.HelperText>
           </FormControl>
+          <Box>
+            <FormControl.Label>Color</FormControl.Label>
+            <ColorCircleRow
+              currentColor={courseColor}
+              onChange={(color) => setCourseColor(color)}
+            />
+          </Box>
         </Modal.Body>
         <Modal.Footer>
           <Button.Group space={2}>
@@ -186,9 +208,14 @@ export const EditCourseInfoModal = ({
             </Button>
             <Button
               onPress={() => {
-                if (courseName && courseUrl) {
+                if (courseName && courseUrl && courseColor) {
                   dispatch(
-                    editCourseAction(courseIndex, courseName, courseUrl)
+                    editCourseAction(
+                      courseIndex,
+                      courseName,
+                      courseUrl,
+                      courseColor
+                    )
                   );
                   onClose(false);
                 } else {
@@ -214,6 +241,9 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
   const dispatch = useAppDispatch();
   const [courseName, setCourseName] = React.useState("");
   const [courseUrl, setCourseUrl] = React.useState("");
+  const [courseColor, setCourseColor] = React.useState(
+    LIST_OF_COURSE_COLORS[Math.floor(Math.random() * 6)]
+  );
   const addToast = useToast();
   const cleanClose = () => {
     setCourseName("");
@@ -239,7 +269,7 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
               What you would like to refer to the course as
             </FormControl.HelperText>
           </FormControl>
-          <FormControl isInvalid={courseUrl.trim() === ""}>
+          <FormControl marginBottom='2' isInvalid={courseUrl.trim() === ""}>
             <FormControl.Label>Course URL</FormControl.Label>
             <Input
               value={courseUrl}
@@ -252,6 +282,13 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
               This is the course's URL on Moodle
             </FormControl.HelperText>
           </FormControl>
+          <Box>
+            <FormControl.Label>Color</FormControl.Label>
+            <ColorCircleRow
+              currentColor={courseColor}
+              onChange={(color) => setCourseColor(color)}
+            />
+          </Box>
         </Modal.Body>
         <Modal.Footer>
           <Button.Group space={2}>
@@ -265,7 +302,7 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
             <Button
               onPress={() => {
                 if (courseName !== "" && courseUrl !== "") {
-                  dispatch(addCourseAction(courseName, courseUrl));
+                  dispatch(addCourseAction(courseName, courseUrl, courseColor));
                   cleanClose();
                 } else {
                   addToast.show({

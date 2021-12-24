@@ -21,12 +21,13 @@ export const unsaveCredentialsAction = () => {
 };
 
 // COURSES ACTIONS
-export const addCourseAction = (name: string, url: string) => {
+export const addCourseAction = (name: string, url: string, color: string) => {
   return {
     type: ADD_NEW_COURSE,
     payload: {
       courseName: name,
       courseUrl: url,
+      courseColor: color,
     },
   };
 };
@@ -40,13 +41,19 @@ export const deleteCourseAction = (i: number) => {
   };
 };
 
-export const editCourseAction = (i: number, name: string, url: string) => {
+export const editCourseAction = (
+  i: number,
+  name: string,
+  url: string,
+  color: string
+) => {
   return {
     type: EDIT_COURSE_INFO,
     payload: {
       courseIndex: i,
       courseName: name,
       courseUrl: url,
+      courseColor: color,
     },
   };
 };

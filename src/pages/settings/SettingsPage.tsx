@@ -5,10 +5,12 @@ import CredentialModal from "./CredentialModal";
 import SettingOptionTile, {
   SettingOptionTileInterface,
 } from "../../components/settings/SettingsOptionTile";
+import AboutModal from "./AboutModal";
 
 const SettingsPage = () => {
   const [credModal, setCredModal] = React.useState(false);
   const [coursesModal, setCourseModal] = React.useState(false);
+  const [aboutModal, setAboutModal] = React.useState(false);
   const listData: SettingOptionTileInterface[] = [
     {
       text: "Credentials",
@@ -28,7 +30,9 @@ const SettingsPage = () => {
     },
     {
       text: "About",
-      onClickAction: () => {},
+      onClickAction: () => {
+        setAboutModal(true);
+      },
     },
     //TODO: This is the last thing to implement so we can set CLEAR_ALL_DATA on each reducer
     {
@@ -50,6 +54,7 @@ const SettingsPage = () => {
       />
       <CredentialModal isOpen={credModal} onClose={setCredModal} />
       <CoursesModal isOpen={coursesModal} onClose={setCourseModal} />
+      <AboutModal isOpen={aboutModal} onClose={setAboutModal} />
     </>
   );
 };

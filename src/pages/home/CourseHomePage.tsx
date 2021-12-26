@@ -33,13 +33,12 @@ const CourseHomePage = () => {
         icon={<Ionicons name='refresh' size={24} color='white' />}
         label={
           <Text fontWeight='semibold' fontSize='xl' color='white'>
-            Update
+            Refresh
           </Text>
         }
         onPress={() =>
           console.log(
-            "Opening loading modal, making network req, projecting...",
-            expandIndex
+            "Opening loading modal, making network req, projecting..."
           )
         }
       />

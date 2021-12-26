@@ -1,6 +1,7 @@
 import {
   ADD_NEW_COURSE,
   ADD_NEW_NOTIFICATION,
+  CLEAR_ALL_DATA,
   DELETE_COURSE,
   DELETE_NOTIFICATION,
   EDIT_COURSE_INFO,
@@ -72,5 +73,12 @@ export const deleteNotificationDurationAction = (numDays: number) => {
   return {
     type: DELETE_NOTIFICATION,
     payload: { numDays },
+  };
+};
+
+//CLEAR_ALL_DATA
+export const clearAllDataAction = () => {
+  return {
+    type: CLEAR_ALL_DATA,
   };
 };

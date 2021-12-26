@@ -2,10 +2,11 @@ import React from "react";
 import { Button, FormControl, Input, Modal } from "native-base";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "./ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+} from "../common/ModalCommons";
 import { PRIMARY_BLUE } from "../../colours.styles";
+import { useEffect } from "react";
 
 interface AddNotificationModalInterface extends ModalParamInterface {
   addAction: (d: number) => void;
@@ -17,15 +18,15 @@ const AddNotificationModal = ({
   addAction,
 }: AddNotificationModalInterface) => {
   const [numDays, setNumDays] = React.useState(0);
-  const cleanClose = () => {
+  //when component is opened/closed, set num days to 0
+  useEffect(() => {
     setNumDays(0);
-    onClose(false);
-  };
+  }, [isOpen]);
   return (
-    <Modal isOpen={isOpen} onClose={cleanClose} size='xl'>
+    <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Add Notification' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Add Notification' />
         <Modal.Body>
           <FormControl isInvalid={numDays === 0}>
             <FormControl.Label>
@@ -54,7 +55,7 @@ const AddNotificationModal = ({
             <Button
               variant='ghost'
               colorScheme='blueGray'
-              onPress={() => cleanClose()}
+              onPress={() => onClose(false)}
             >
               Cancel
             </Button>
@@ -63,7 +64,7 @@ const AddNotificationModal = ({
               onPress={() => {
                 if (numDays === 0) return;
                 addAction(numDays);
-                cleanClose();
+                onClose(false);
               }}
             >
               Save

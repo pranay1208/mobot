@@ -1,6 +1,5 @@
 import { VStack, Box, Text, Fab } from "native-base";
 import React from "react";
-import { NOTIF_GREEN, NOTIF_YELLOW, PRIMARY_BLUE } from "../../colours.styles";
 import OverviewText from "../../components/home/OverviewText";
 import { Ionicons } from "@expo/vector-icons";
 import CourseUpdateTile from "../../components/home/CourseUpdateTile";
@@ -28,6 +27,7 @@ const CourseHomePage = () => {
   return (
     <VStack paddingTop='3'>
       <Fab
+        position='fixed'
         borderRadius='full'
         colorScheme='emerald'
         icon={<Ionicons name='refresh' size={24} color='white' />}
@@ -57,17 +57,17 @@ const CourseHomePage = () => {
           <Box>
             <OverviewText
               text='3 modules added'
-              iconColor={PRIMARY_BLUE}
+              iconColor='#0ea5e9'
               iconName='add-circle'
             />
             <OverviewText
               text='2 modules modified'
-              iconColor={NOTIF_YELLOW}
+              iconColor='#f59e0b'
               iconName='information-circle'
             />
             <OverviewText
               text='8 modules completed'
-              iconColor={NOTIF_GREEN}
+              iconColor='#10b981'
               iconName='checkmark-circle'
             />
           </Box>

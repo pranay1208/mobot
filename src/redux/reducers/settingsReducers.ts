@@ -74,6 +74,8 @@ export const coursesReducer = (
       });
     case DELETE_COURSE:
       return state.filter((_, index) => index !== action.payload.courseIndex);
+    case CLEAR_ALL_DATA:
+      return [];
     default:
       return state;
   }
@@ -91,6 +93,8 @@ export const notificationsDurationReducer = (
       return [...state, action.payload.numDays];
     case DELETE_NOTIFICATION:
       return state.filter((days) => days !== action.payload.numDays);
+    case CLEAR_ALL_DATA:
+      return [];
     default:
       return state;
   }

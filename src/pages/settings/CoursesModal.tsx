@@ -2,9 +2,9 @@ import React from "react";
 import { Modal, Button, Center, FlatList } from "native-base";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "../../components/settings/ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+} from "../../components/common/ModalCommons";
 import { useAppSelector } from "../../redux";
 import {
   AddCourseModal,
@@ -31,8 +31,8 @@ const CoursesModal = ({ isOpen, onClose }: ModalParamInterface) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Courses' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Courses' />
         <Modal.Body>
           <FlatList
             data={listOfCourses}

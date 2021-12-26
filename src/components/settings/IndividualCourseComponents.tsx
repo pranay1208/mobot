@@ -15,9 +15,10 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "./ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+  CommonModalDangerHeader,
+} from "../common/ModalCommons";
 import {
   BACKGROUND_WHITE,
   LIST_OF_COURSE_COLORS,
@@ -31,6 +32,7 @@ import {
   editCourseAction,
 } from "../../redux/actions/settingsActions";
 import { ColorCircle, ColorCircleRow } from "./CourseColorSelector";
+import { useEffect } from "react";
 
 export const ModalCourseTile = (
   courseName: string,
@@ -100,12 +102,8 @@ export const DeleteCourseConfirmationModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <Modal.Header backgroundColor={NOTIIF_RED} tintColor={BACKGROUND_WHITE}>
-          <Heading color='white' size='md'>
-            Delete Course
-          </Heading>
-        </Modal.Header>
+        <CommonModalCloseButton />
+        <CommonModalDangerHeader title='Delete course' />
         <Modal.Body>
           <Text fontSize='lg' paddingX='2'>
             Are you sure you want to delete this course? This will delete all
@@ -159,8 +157,8 @@ export const EditCourseInfoModal = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Edit Course' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Edit Course' />
         <Modal.Body>
           <FormControl marginBottom='2' isInvalid={courseName.trim() === ""}>
             <FormControl.Label>Course Name</FormControl.Label>
@@ -245,16 +243,16 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
     LIST_OF_COURSE_COLORS[Math.floor(Math.random() * 6)]
   );
   const addToast = useToast();
-  const cleanClose = () => {
+  useEffect(() => {
     setCourseName("");
     setCourseUrl("");
-    onClose(false);
-  };
+    setCourseColor(LIST_OF_COURSE_COLORS[Math.floor(Math.random() * 6)]);
+  }, [isOpen]);
   return (
-    <Modal isOpen={isOpen} onClose={cleanClose} size='xl'>
+    <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Add Course' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Add Course' />
         <Modal.Body>
           <FormControl marginBottom='2' isInvalid={courseName.trim() === ""}>
             <FormControl.Label>Course Name</FormControl.Label>
@@ -295,7 +293,7 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
             <Button
               variant='ghost'
               colorScheme='blueGray'
-              onPress={() => cleanClose()}
+              onPress={() => onClose(false)}
             >
               Cancel
             </Button>
@@ -303,7 +301,7 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
               onPress={() => {
                 if (courseName !== "" && courseUrl !== "") {
                   dispatch(addCourseAction(courseName, courseUrl, courseColor));
-                  cleanClose();
+                  onClose(false);
                 } else {
                   addToast.show({
                     description: "Please fill in all fields",

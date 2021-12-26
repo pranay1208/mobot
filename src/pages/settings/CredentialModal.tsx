@@ -10,15 +10,16 @@ import {
 } from "native-base";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "../../components/settings/ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+} from "../../components/common/ModalCommons";
 import { PRIMARY_BLUE } from "../../colours.styles";
 import { useAppDispatch, useAppSelector } from "../../redux";
 import {
   unsaveCredentialsAction,
   saveCredentialsAction,
 } from "../../redux/actions/settingsActions";
+import { useEffect } from "react";
 
 const CHECKBOX_VALUE = "save";
 
@@ -41,18 +42,17 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
     shouldNotTakeCreds ? "" : credentials.password
   );
 
-  const onClosedCleanup = () => {
+  useEffect(() => {
     setUsername(credentials.username);
     setPassword(credentials.password);
     setSaveCredentials(saveCredentialsInitValue);
-    onClose(false);
-  };
+  }, [isOpen]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClosedCleanup} size='xl'>
+    <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Credentials' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Credentials' />
         <Modal.Body>
           <Box marginBottom='1'>
             <Text>
@@ -104,7 +104,7 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
             <Button
               variant='ghost'
               colorScheme='blueGray'
-              onPress={() => onClosedCleanup()}
+              onPress={() => onClose(false)}
             >
               Cancel
             </Button>
@@ -113,11 +113,10 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
               onPress={() => {
                 if (shouldNotTakeCreds) {
                   dispatch(unsaveCredentialsAction());
-                  onClosedCleanup();
                 } else {
                   dispatch(saveCredentialsAction(username, password));
-                  onClose(false);
                 }
+                onClose(false);
               }}
             >
               Save

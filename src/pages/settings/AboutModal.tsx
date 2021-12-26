@@ -2,17 +2,17 @@ import React from "react";
 import { Modal, Button, Text, Link, VStack } from "native-base";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "../../components/settings/ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+} from "../../components/common/ModalCommons";
 import { PRIMARY_BLUE } from "../../colours.styles";
 
 const AboutModal = ({ isOpen, onClose }: ModalParamInterface) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='About' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='About' />
         <Modal.Body>
           <VStack space={2}>
             <Text fontSize='lg'>

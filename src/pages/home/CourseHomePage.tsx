@@ -26,7 +26,7 @@ const CourseHomePage = () => {
     },
   ];
   return (
-    <VStack safeAreaTop>
+    <VStack paddingTop='3'>
       <Fab
         borderRadius='full'
         colorScheme='emerald'

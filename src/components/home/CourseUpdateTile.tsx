@@ -11,6 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import ProgressBar from "../common/ProgressBar";
 import { Pressable } from "react-native";
+import UpdateTile from "./UpdateTile";
 
 interface CourseUpdateTileProps {
   myIndex: number;
@@ -29,6 +30,7 @@ const CourseUpdateTile = ({
   name,
   progress,
 }: CourseUpdateTileProps) => {
+  const isExpanded = myIndex === selIndex;
   return (
     <VStack>
       <Box
@@ -36,11 +38,11 @@ const CourseUpdateTile = ({
         borderColor='black'
         paddingY='2'
         paddingX='5'
-        borderBottomWidth={myIndex === selIndex ? "0" : "1"}
+        borderBottomWidth={isExpanded ? "0" : "1"}
       >
         <Pressable
           onPress={() => {
-            if (myIndex === selIndex) {
+            if (isExpanded) {
               action(-1);
             } else {
               action(myIndex);
@@ -57,7 +59,7 @@ const CourseUpdateTile = ({
             <Box>
               <Center>
                 <Ionicons
-                  name={myIndex === selIndex ? "chevron-up" : "chevron-down"}
+                  name={isExpanded ? "chevron-up" : "chevron-down"}
                   size={24}
                 />
               </Center>
@@ -65,7 +67,7 @@ const CourseUpdateTile = ({
           </HStack>
         </Pressable>
       </Box>
-      <Collapse isOpen={myIndex === selIndex} duration={700}>
+      <Collapse isOpen={isExpanded} duration={700}>
         <Box
           borderWidth='1'
           borderTopWidth='0'
@@ -75,69 +77,21 @@ const CourseUpdateTile = ({
           paddingY='2'
         >
           <VStack space={3}>
-            <Box
-              backgroundColor='info.500'
-              rounded='md'
-              paddingX='2'
-              paddingY='1'
-            >
-              <HStack space={2}>
-                <Center>
-                  <Ionicons name='add-circle' size={36} />
-                </Center>
-                <Box flex='1'>
-                  <Text fontWeight='semibold' fontSize='lg'>
-                    Assignment 4
-                  </Text>
-                  <Text fontWeight='semibold' fontSize='lg'>
-                    13 Resources
-                  </Text>
-                </Box>
-              </HStack>
-            </Box>
-            <Box
-              backgroundColor='amber.500'
-              rounded='md'
-              paddingX='2'
-              paddingY='1'
-            >
-              <HStack space={2}>
-                <Center>
-                  <Ionicons name='information-circle' size={36} />
-                </Center>
-                <Box flex='1'>
-                  <Text fontWeight='semibold' fontSize='lg'>
-                    Assignment 3
-                  </Text>
-                  <Text fontWeight='semibold' fontSize='lg'>
-                    2 Resources
-                  </Text>
-                </Box>
-              </HStack>
-            </Box>
-            <Box
-              backgroundColor='emerald.500'
-              rounded='md'
-              paddingX='2'
-              paddingY='1'
-            >
-              <HStack space={2}>
-                <Center>
-                  <Ionicons name='checkmark-circle' size={36} />
-                </Center>
-                <Box flex='1'>
-                  <Text fontWeight='semibold' fontSize='lg'>
-                    Assignment 2
-                  </Text>
-                  <Text fontWeight='semibold' fontSize='lg'>
-                    Assignment 1
-                  </Text>
-                  <Text fontWeight='semibold' fontSize='lg'>
-                    5 Resources
-                  </Text>
-                </Box>
-              </HStack>
-            </Box>
+            <UpdateTile
+              color='info.500'
+              iconName='add-circle'
+              texts={["Assignment 4", "13 Resources"]}
+            />
+            <UpdateTile
+              color='amber.500'
+              iconName='information-circle'
+              texts={["Assignment 3", "2 Resources"]}
+            />
+            <UpdateTile
+              color='emerald.500'
+              iconName='checkmark-circle'
+              texts={["Assignment 2", "Assignment 1", "5 Resources"]}
+            />
           </VStack>
         </Box>
       </Collapse>

@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 
 //Import all reducers
-import testReducer from "./testReducer";
 import {
   coursesReducer,
   credentialReducer,
@@ -9,7 +8,6 @@ import {
 } from "./settingsReducers";
 
 const rootReducer = combineReducers({
-  test: testReducer,
   credentials: credentialReducer,
   courses: coursesReducer,
   notificationDurations: notificationsDurationReducer,

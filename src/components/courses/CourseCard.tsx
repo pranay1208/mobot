@@ -3,14 +3,13 @@ import {
   Center,
   Circle,
   Heading,
-  HStack,
   Pressable,
-  Progress,
   Stack,
   Text,
 } from "native-base";
 import React from "react";
 import { BACKGROUND_WHITE, NOTIF_YELLOW } from "../../colours.styles";
+import ProgressBar from "../common/ProgressBar";
 
 export interface CourseCardProps {
   courseTitle: string;
@@ -31,17 +30,10 @@ const CourseInfoText = (props: { value: string }) => {
 };
 
 const CourseCard = (props: CourseCardProps) => {
-  const progressValue = Math.floor(
-    (props.completedModules / props.totalModules) * 100
-  );
-  let progressColor = "";
-  if (progressValue > 60) {
-    progressColor = "emerald";
-  } else if (progressValue > 35) {
-    progressColor = "orange";
-  } else {
-    progressColor = "danger";
-  }
+  const progressValue =
+    props.totalModules === 0
+      ? 0
+      : Math.floor((props.completedModules / props.totalModules) * 100);
 
   return (
     <Pressable marginX='3' marginY='2' onPress={() => console.log("Hello")}>
@@ -81,18 +73,7 @@ const CourseCard = (props: CourseCardProps) => {
               )}
             </Center>
           </Stack>
-          <HStack alignItems='center'>
-            <Box flex='5'>
-              <Progress
-                value={progressValue}
-                size='sm'
-                colorScheme={progressColor}
-              />
-            </Box>
-            <Box flex='1' paddingLeft={1.5}>
-              <Text fontSize='xs'>{progressValue}%</Text>
-            </Box>
-          </HStack>
+          <ProgressBar progress={progressValue} />
         </Stack>
       </Box>
     </Pressable>

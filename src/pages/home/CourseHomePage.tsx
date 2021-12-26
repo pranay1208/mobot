@@ -6,7 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CourseUpdateTile from "../../components/home/CourseUpdateTile";
 
 const CourseHomePage = () => {
-  const [expandIndex, setExpandIndex] = React.useState(1);
+  const [expandIndex, setExpandIndex] = React.useState(-1);
   const courseTileList = [
     {
       name: "STAT1603: Introduction to Statistics",
@@ -63,7 +63,7 @@ const CourseHomePage = () => {
             <OverviewText
               text='2 modules modified'
               iconColor={NOTIF_YELLOW}
-              iconName='pencil'
+              iconName='information-circle'
             />
             <OverviewText
               text='8 modules completed'

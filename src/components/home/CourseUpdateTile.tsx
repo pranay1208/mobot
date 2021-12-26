@@ -1,5 +1,13 @@
 import React from "react";
-import { Box, Text, HStack, Heading, Center, VStack } from "native-base";
+import {
+  Box,
+  Text,
+  HStack,
+  Heading,
+  Center,
+  VStack,
+  Collapse,
+} from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import ProgressBar from "../common/ProgressBar";
 import { Pressable } from "react-native";
@@ -57,7 +65,7 @@ const CourseUpdateTile = ({
           </HStack>
         </Pressable>
       </Box>
-      {myIndex === selIndex && (
+      <Collapse isOpen={myIndex === selIndex} duration={700}>
         <Box
           borderWidth='1'
           borderTopWidth='0'
@@ -95,7 +103,7 @@ const CourseUpdateTile = ({
             >
               <HStack space={2}>
                 <Center>
-                  <Ionicons name='pencil' size={36} />
+                  <Ionicons name='information-circle' size={36} />
                 </Center>
                 <Box flex='1'>
                   <Text fontWeight='semibold' fontSize='lg'>
@@ -132,7 +140,7 @@ const CourseUpdateTile = ({
             </Box>
           </VStack>
         </Box>
-      )}
+      </Collapse>
     </VStack>
   );
 };

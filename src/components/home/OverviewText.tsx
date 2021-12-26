@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 interface OverviewTextParams {
   text: string;
-  iconName: "add-circle" | "pencil" | "checkmark-circle";
+  iconName: "add-circle" | "information-circle" | "checkmark-circle";
   iconColor: string;
 }
 const OverviewText = ({ text, iconColor, iconName }: OverviewTextParams) => {

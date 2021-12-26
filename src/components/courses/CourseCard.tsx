@@ -3,9 +3,7 @@ import {
   Center,
   Circle,
   Heading,
-  HStack,
   Pressable,
-  Progress,
   Stack,
   Text,
 } from "native-base";
@@ -32,9 +30,10 @@ const CourseInfoText = (props: { value: string }) => {
 };
 
 const CourseCard = (props: CourseCardProps) => {
-  const progressValue = Math.floor(
-    (props.completedModules / props.totalModules) * 100
-  );
+  const progressValue =
+    props.totalModules === 0
+      ? 0
+      : Math.floor((props.completedModules / props.totalModules) * 100);
 
   return (
     <Pressable marginX='3' marginY='2' onPress={() => console.log("Hello")}>

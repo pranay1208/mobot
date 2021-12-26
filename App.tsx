@@ -6,25 +6,24 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
 
 import MainCoursePage from "./src/pages/courses/MainCoursePage";
-import { reduxStore, useAppDispatch, useAppSelector } from "./src/redux";
-import { decrement, increment } from "./src/redux/actions/testActions";
+import { reduxStore } from "./src/redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { RootDrawerParamList } from "./src/interfaces/navigatorInterfaces";
 import NotificationListPage from "./src/pages/notifications/NotificationListPage";
 import AppDrawer from "./src/components/AppDrawer";
 import { PRIMARY_BLUE } from "./src/colours.styles";
 import SettingsPage from "./src/pages/settings/SettingsPage";
+import HomePage from "./src/pages/home/HomePage";
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
 //Edit this to add navigators and other content into the application
 function AppContent() {
-  const dispatch = useAppDispatch();
   return (
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName='Courses'
+          initialRouteName='Home'
           drawerContent={(props) => <AppDrawer {...props} />}
           screenOptions={{
             headerTintColor: "#FFF",
@@ -35,6 +34,15 @@ function AppContent() {
             },
           }}
         >
+          <Drawer.Screen
+            name='Home'
+            component={HomePage}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name='home' color={color} size={size} />
+              ),
+            }}
+          />
           <Drawer.Screen
             name='Courses'
             component={MainCoursePage}
@@ -60,6 +68,12 @@ function AppContent() {
               drawerIcon: ({ color, size }) => (
                 <Ionicons name='settings' color={color} size={size} />
               ),
+            }}
+            initialParams={{
+              openAbout: false,
+              openCourses: false,
+              openCreds: false,
+              openNotifs: false,
             }}
           />
         </Drawer.Navigator>

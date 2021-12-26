@@ -7,12 +7,16 @@ import SettingOptionTile, {
 } from "../../components/settings/SettingsOptionTile";
 import AboutModal from "./AboutModal";
 import NotificationModal from "./NotificationModal";
+import { DrawerScreenProps } from "@react-navigation/drawer";
+import { RootDrawerParamList } from "../../interfaces/navigatorInterfaces";
 
-const SettingsPage = () => {
-  const [credModal, setCredModal] = React.useState(false);
-  const [coursesModal, setCourseModal] = React.useState(false);
-  const [notifModal, setNotifModal] = React.useState(false);
-  const [aboutModal, setAboutModal] = React.useState(false);
+type Props = DrawerScreenProps<RootDrawerParamList, "Settings">;
+const SettingsPage = ({ route }: Props) => {
+  const { openAbout, openCourses, openCreds, openNotifs } = route.params;
+  const [credModal, setCredModal] = React.useState(openCreds);
+  const [coursesModal, setCourseModal] = React.useState(openCourses);
+  const [notifModal, setNotifModal] = React.useState(openNotifs);
+  const [aboutModal, setAboutModal] = React.useState(openAbout);
   const listData: SettingOptionTileInterface[] = [
     {
       text: "Credentials",

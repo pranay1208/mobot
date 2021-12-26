@@ -3,5 +3,12 @@ export type RootDrawerParamList = {
   Courses: undefined;
   Deadlines: undefined;
   Notifications: undefined;
-  Settings: undefined;
+  Settings: SettingsParams;
 };
+
+interface SettingsParams {
+  openCreds: boolean;
+  openCourses: boolean;
+  openNotifs: boolean;
+  openAbout: boolean;
+}

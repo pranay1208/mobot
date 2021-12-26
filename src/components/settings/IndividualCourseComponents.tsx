@@ -153,7 +153,7 @@ export const EditCourseInfoModal = ({
     selectedTile?.courseUrl ?? ""
   );
   const [courseColor, setCourseColor] = React.useState(
-    selectedTile.courseColor ?? ""
+    selectedTile?.courseColor ?? ""
   );
   const editToast = useToast();
   return (

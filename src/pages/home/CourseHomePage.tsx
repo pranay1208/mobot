@@ -1,4 +1,4 @@
-import { VStack, Box, Text, Fab } from "native-base";
+import { VStack, Box, Text, Fab, Center } from "native-base";
 import React from "react";
 import OverviewText from "../../components/home/OverviewText";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,24 +21,8 @@ const CourseHomePage = () => {
     REFRESH_STATE.UNKNOWN
   );
   const dashboard = useAppSelector((state) => state.dashboard);
-  const courseTileList = [
-    {
-      name: "STAT1603: Introduction to Statistics",
-      p: 75,
-    },
-    {
-      name: "GEOG1012: Urbanization in Globalizing World",
-      p: 35,
-    },
-    {
-      name: "COMP3258: Functional Programming",
-      p: 45,
-    },
-    {
-      name: "COMP4801: FYP",
-      p: 95,
-    },
-  ];
+  const courses = useAppSelector((state) => state.courses);
+
   return (
     <VStack paddingTop='3'>
       <Fab
@@ -110,14 +94,14 @@ const CourseHomePage = () => {
           </Text>
         </Box>
       </Box>
-      {courseTileList.map((val, index) => (
+      {courses.map((val, index) => (
         <CourseUpdateTile
           key={index}
           myIndex={index}
           selIndex={expandIndex}
           action={(i: number) => setExpandIndex(i)}
-          name={val.name}
-          progress={val.p}
+          courseName={val.courseName}
+          courseUrl={val.courseUrl}
         />
       ))}
     </VStack>

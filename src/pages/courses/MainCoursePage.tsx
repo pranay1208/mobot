@@ -1,61 +1,63 @@
 import React from "react";
-import { Box, FlatList } from "native-base";
+import { Box, FlatList, Text } from "native-base";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import CourseCard, {
   CourseCardProps,
 } from "../../components/courses/CourseCard";
 import { RootDrawerParamList } from "../../interfaces/navigatorInterfaces";
+import { useAppSelector } from "../../redux";
+import { getCourseProgress } from "../../utils/course";
+import { ModuleType } from "../../interfaces/apiInterface";
 
 type Props = DrawerScreenProps<RootDrawerParamList, "Courses">;
 
 const MainCoursePage = ({ navigation }: Props) => {
-  const data: CourseCardProps[] = [
-    {
-      courseTitle: "STAT1603: Introduction to Statistics",
-      courseAlerts: 5,
-      numberAssignments: 4,
-      numberQuizzes: 1,
-      numberResources: 33,
-      totalModules: 42,
-      completedModules: 35,
-    },
-    {
-      courseTitle: "GEOG1012: Effects of Globalization in an Urbanizing World",
-      courseAlerts: 10,
-      numberAssignments: 4,
-      numberQuizzes: 1,
-      numberResources: 33,
-      totalModules: 42,
-      completedModules: 10,
-    },
-    {
-      courseTitle: "CAES9542: Core English for Computer Science",
-      courseAlerts: 0,
-      numberAssignments: 4,
-      numberQuizzes: 1,
-      numberResources: 33,
-      totalModules: 42,
-      completedModules: 42,
-    },
-    {
-      courseTitle: "COMP4801: Final Year Project",
-      courseAlerts: 2,
-      numberAssignments: 4,
-      numberQuizzes: 1,
-      numberResources: 33,
-      totalModules: 42,
-      completedModules: 25,
-    },
-    {
-      courseTitle: "COMP3258: Functional Programming",
-      courseAlerts: 7,
-      numberAssignments: 4,
-      numberQuizzes: 1,
-      numberResources: 33,
-      totalModules: 42,
-      completedModules: 30,
-    },
-  ];
+  const courses = useAppSelector((state) => state.courses);
+  const modules = useAppSelector((state) => state.modules);
+  const added = useAppSelector((state) => state.dashboard.added);
+
+  if (courses.length === 0) {
+    return (
+      <Box safeAreaTop>
+        <Text fontSize='xl' fontWeight='semibold' textAlign='center'>
+          No courses added
+        </Text>
+      </Box>
+    );
+  }
+
+  const data: CourseCardProps[] = courses.map((course) => {
+    let numberAssignments = 0,
+      numberQuizzes = 0,
+      numberResources = 0;
+    modules
+      .filter((mod) => mod.courseUrl === course.courseUrl)
+      .forEach((mod) => {
+        if (
+          mod.type === ModuleType.ASSIGNMENT ||
+          mod.type === ModuleType.TURNITIN
+        ) {
+          numberAssignments += 1;
+        } else if (
+          mod.type === ModuleType.CHOICE ||
+          mod.type === ModuleType.CHOICEGROUP ||
+          mod.type === ModuleType.QUIZ
+        ) {
+          numberQuizzes += 1;
+        } else {
+          numberResources += 1;
+        }
+      });
+    return {
+      courseTitle: course.courseName,
+      courseAlerts: added.filter((u) => u.courseUrl === course.courseUrl)
+        .length,
+      numberAssignments,
+      numberQuizzes,
+      numberResources,
+      progress: getCourseProgress(course.courseUrl),
+    };
+  });
   return (
     <Box paddingY='4'>
       <FlatList

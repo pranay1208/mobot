@@ -17,8 +17,7 @@ export interface CourseCardProps {
   numberAssignments: number;
   numberQuizzes: number;
   numberResources: number;
-  totalModules: number;
-  completedModules: number;
+  progress: number;
 }
 
 const CourseInfoText = (props: { value: string }) => {
@@ -30,11 +29,6 @@ const CourseInfoText = (props: { value: string }) => {
 };
 
 const CourseCard = (props: CourseCardProps) => {
-  const progressValue =
-    props.totalModules === 0
-      ? 0
-      : Math.floor((props.completedModules / props.totalModules) * 100);
-
   return (
     <Pressable marginX='3' marginY='2' onPress={() => console.log("Hello")}>
       <Box
@@ -57,7 +51,7 @@ const CourseCard = (props: CourseCardProps) => {
               <CourseInfoText
                 value={`${props.numberAssignments} Assignments`}
               />
-              <CourseInfoText value={`${props.numberQuizzes} Quizzes`} />
+              <CourseInfoText value={`${props.numberQuizzes} Action Items`} />
               <CourseInfoText value={`${props.numberResources} Resources`} />
             </Stack>
             <Center flex={1}>
@@ -73,7 +67,7 @@ const CourseCard = (props: CourseCardProps) => {
               )}
             </Center>
           </Stack>
-          <ProgressBar progress={progressValue} />
+          <ProgressBar progress={props.progress} />
         </Stack>
       </Box>
     </Pressable>

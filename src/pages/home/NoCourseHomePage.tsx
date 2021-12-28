@@ -9,7 +9,7 @@ const NoCourseHomePage = ({ navigation }: Props) => {
     <VStack space={10}>
       <Box marginTop='25'>
         <Center>
-          <Text fontSize='xl' textAlign='center'>
+          <Text fontSize='xl' textAlign='center' fontWeight='semibold'>
             No courses registered. Add some to get started!
           </Text>
         </Center>

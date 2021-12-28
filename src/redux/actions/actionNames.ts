@@ -2,6 +2,9 @@
 export const CLEAR_ALL_DATA = "CLEAR_ALL_DATA";
 //! passing this action will clear data from each and every reducer
 
+//* MODULE ACTION NAMES
+export const UPDATE_MODULES = "UPDATE_MODULES";
+
 //* SETTINGS ACTION NAMES
 
 //CREDENTIALS

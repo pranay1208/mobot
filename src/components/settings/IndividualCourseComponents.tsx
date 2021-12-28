@@ -90,14 +90,14 @@ export const ModalCourseTile = (
   );
 };
 
-interface CourseSettingsModalParams extends ModalParamInterface {
-  courseIndex: number;
+interface DeleteCourseModalParams extends ModalParamInterface {
+  courseUrl: string;
 }
 export const DeleteCourseConfirmationModal = ({
   isOpen,
   onClose,
-  courseIndex,
-}: CourseSettingsModalParams) => {
+  courseUrl,
+}: DeleteCourseModalParams) => {
   const dispatch = useAppDispatch();
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
@@ -121,7 +121,7 @@ export const DeleteCourseConfirmationModal = ({
             </Button>
             <Button
               onPress={() => {
-                dispatch(deleteCourseAction(courseIndex));
+                dispatch(deleteCourseAction(courseUrl));
                 onClose(false);
               }}
               backgroundColor={NOTIIF_RED}
@@ -135,11 +135,14 @@ export const DeleteCourseConfirmationModal = ({
   );
 };
 
+interface EditCourseModalParams extends ModalParamInterface {
+  courseIndex: number;
+}
 export const EditCourseInfoModal = ({
   isOpen,
   onClose,
   courseIndex,
-}: CourseSettingsModalParams) => {
+}: EditCourseModalParams) => {
   const selectedTile = useAppSelector((state) => {
     return state.courses[courseIndex];
   });

@@ -17,7 +17,7 @@ const UpdateTile = ({ color, iconName, texts }: UpdateTileProps) => {
         </Center>
         <Box flex='1'>
           {texts.map((txt, index) => (
-            <Text fontWeight='semibold' fontSize='lg' key={index}>
+            <Text fontWeight='semibold' fontSize='lg' key={index} isTruncated>
               {txt}
             </Text>
           ))}

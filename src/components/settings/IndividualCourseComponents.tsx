@@ -4,7 +4,6 @@ import {
   Text,
   Pressable,
   Modal,
-  Heading,
   Button,
   FormControl,
   Input,
@@ -20,7 +19,6 @@ import {
   CommonModalDangerHeader,
 } from "../common/ModalCommons";
 import {
-  BACKGROUND_WHITE,
   LIST_OF_COURSE_COLORS,
   NOTIIF_RED,
   PRIMARY_BLUE,
@@ -90,14 +88,14 @@ export const ModalCourseTile = (
   );
 };
 
-interface CourseSettingsModalParams extends ModalParamInterface {
-  courseIndex: number;
+interface DeleteCourseModalParams extends ModalParamInterface {
+  courseUrl: string;
 }
 export const DeleteCourseConfirmationModal = ({
   isOpen,
   onClose,
-  courseIndex,
-}: CourseSettingsModalParams) => {
+  courseUrl,
+}: DeleteCourseModalParams) => {
   const dispatch = useAppDispatch();
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
@@ -121,7 +119,7 @@ export const DeleteCourseConfirmationModal = ({
             </Button>
             <Button
               onPress={() => {
-                dispatch(deleteCourseAction(courseIndex));
+                dispatch(deleteCourseAction(courseUrl));
                 onClose(false);
               }}
               backgroundColor={NOTIIF_RED}
@@ -135,11 +133,14 @@ export const DeleteCourseConfirmationModal = ({
   );
 };
 
+interface EditCourseModalParams extends ModalParamInterface {
+  courseIndex: number;
+}
 export const EditCourseInfoModal = ({
   isOpen,
   onClose,
   courseIndex,
-}: CourseSettingsModalParams) => {
+}: EditCourseModalParams) => {
   const selectedTile = useAppSelector((state) => {
     return state.courses[courseIndex];
   });
@@ -235,6 +236,14 @@ export const EditCourseInfoModal = ({
   );
 };
 
+const COURSE_URL_REGEX =
+  /https?:\/\/moodle.hku.hk\/course\/view\.php\?id=\d+\/?/;
+
+const isValidCourseUrl = (url: string): boolean => {
+  const result = url.trim().match(COURSE_URL_REGEX);
+  return result !== null && result[0] === result.input;
+};
+
 export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
   const dispatch = useAppDispatch();
   const [courseName, setCourseName] = React.useState("");
@@ -267,7 +276,10 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
               What you would like to refer to the course as
             </FormControl.HelperText>
           </FormControl>
-          <FormControl marginBottom='2' isInvalid={courseUrl.trim() === ""}>
+          <FormControl
+            marginBottom='2'
+            isInvalid={!isValidCourseUrl(courseUrl)}
+          >
             <FormControl.Label>Course URL</FormControl.Label>
             <Input
               value={courseUrl}
@@ -279,6 +291,9 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
             <FormControl.HelperText fontWeight='semibold'>
               This is the course's URL on Moodle
             </FormControl.HelperText>
+            <FormControl.ErrorMessage>
+              The URL does not match the expected format
+            </FormControl.ErrorMessage>
           </FormControl>
           <Box>
             <FormControl.Label>Color</FormControl.Label>

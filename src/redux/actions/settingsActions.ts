@@ -35,11 +35,11 @@ export const addCourseAction = (name: string, url: string, color: string) => {
   };
 };
 
-export const deleteCourseAction = (i: number) => {
+export const deleteCourseAction = (url: string) => {
   return {
     type: DELETE_COURSE,
     payload: {
-      courseIndex: i,
+      courseUrl: url,
     },
   };
 };

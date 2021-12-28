@@ -73,7 +73,9 @@ export const coursesReducer = (
         };
       });
     case DELETE_COURSE:
-      return state.filter((_, index) => index !== action.payload.courseIndex);
+      return state.filter(
+        (course) => course.courseUrl !== action.payload.courseUrl
+      );
     case CLEAR_ALL_DATA:
       return [];
     default:

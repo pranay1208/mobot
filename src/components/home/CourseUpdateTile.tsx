@@ -1,36 +1,34 @@
 import React from "react";
-import {
-  Box,
-  Text,
-  HStack,
-  Heading,
-  Center,
-  VStack,
-  Collapse,
-} from "native-base";
+import { Box, HStack, Heading, Center, VStack, Collapse } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import ProgressBar from "../common/ProgressBar";
 import { Pressable } from "react-native";
 import UpdateTile from "./UpdateTile";
+import { getCourseProgress, getCourseUpdateText } from "../../utils/course";
+import { useAppSelector } from "../../redux";
 
 interface CourseUpdateTileProps {
   myIndex: number;
   selIndex: number;
   action: (i: number) => void;
-  //course: CourseShiz
-  // * Demo props, remove when formalizing
-  name: string;
-  progress: number;
+  courseUrl: string;
+  courseName: string;
 }
 
 const CourseUpdateTile = ({
   myIndex,
   selIndex,
   action,
-  name,
-  progress,
+  courseName,
+  courseUrl,
 }: CourseUpdateTileProps) => {
   const isExpanded = myIndex === selIndex;
+  const dashboard = useAppSelector((state) => state.dashboard);
+  const myAdd = dashboard.added.filter((mod) => mod.courseUrl === courseUrl);
+  const myMod = dashboard.modified.filter((mod) => mod.courseUrl === courseUrl);
+  const myCmp = dashboard.completed.filter(
+    (mod) => mod.courseUrl === courseUrl
+  );
   return (
     <VStack>
       <Box
@@ -52,9 +50,9 @@ const CourseUpdateTile = ({
           <HStack space={2}>
             <Box flex='1'>
               <Heading size='sm' isTruncated marginBottom='1'>
-                {name}
+                {courseName}
               </Heading>
-              <ProgressBar progress={progress} />
+              <ProgressBar progress={getCourseProgress(courseUrl)} />
             </Box>
             <Box>
               <Center>
@@ -80,17 +78,17 @@ const CourseUpdateTile = ({
             <UpdateTile
               color='info.500'
               iconName='add-circle'
-              texts={["Assignment 4", "13 Resources"]}
+              texts={getCourseUpdateText(myAdd, "No additions")}
             />
             <UpdateTile
               color='amber.500'
               iconName='information-circle'
-              texts={["Assignment 3", "2 Resources"]}
+              texts={getCourseUpdateText(myMod, "No modifications")}
             />
             <UpdateTile
               color='emerald.500'
               iconName='checkmark-circle'
-              texts={["Assignment 2", "Assignment 1", "5 Resources"]}
+              texts={getCourseUpdateText(myCmp, "No completions")}
             />
           </VStack>
         </Box>

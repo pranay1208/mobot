@@ -81,7 +81,7 @@ const CoursesModal = ({ isOpen, onClose }: ModalParamInterface) => {
             setClickedindex(-1);
             setDeleteCourseModal(a);
           }}
-          courseIndex={clickedIndex}
+          courseUrl={listOfCourses[clickedIndex].courseUrl}
         />
       )}
     </Modal>

@@ -14,6 +14,7 @@ import NotificationListPage from "./src/pages/notifications/NotificationListPage
 import AppDrawer from "./src/components/AppDrawer";
 import { PRIMARY_BLUE } from "./src/colours.styles";
 import SettingsPage from "./src/pages/settings/SettingsPage";
+import DeadlinesPage from "./src/pages/deadlines/DeadlinesPage";
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
@@ -41,6 +42,15 @@ function AppContent() {
             options={{
               drawerIcon: ({ color, size }) => (
                 <Ionicons name='book' color={color} size={size} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name='Deadlines'
+            component={DeadlinesPage}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name='alarm' color={color} size={size} />
               ),
             }}
           />

@@ -241,7 +241,7 @@ const COURSE_URL_REGEX =
 
 const isValidCourseUrl = (url: string): boolean => {
   const result = url.trim().match(COURSE_URL_REGEX);
-  return result !== null && result[0] !== result.input;
+  return result !== null && result[0] === result.input;
 };
 
 export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {

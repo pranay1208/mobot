@@ -3,9 +3,24 @@ import React from "react";
 import OverviewText from "../../components/home/OverviewText";
 import { Ionicons } from "@expo/vector-icons";
 import CourseUpdateTile from "../../components/home/CourseUpdateTile";
+import { useAppSelector } from "../../redux";
+import ScrapeProgressModal, {
+  REFRESH_STATE,
+} from "../../components/home/ScrapeProgressModal";
+import {
+  encryptCredentials,
+  fetchRefreshedData,
+  getPublicEncryptionKey,
+} from "../../utils/api";
+import updateModules from "../../utils/projection";
 
 const CourseHomePage = () => {
   const [expandIndex, setExpandIndex] = React.useState(-1);
+  const [openScrapeModal, setOpenScrapeModal] = React.useState(false);
+  const [refreshState, setRefreshState] = React.useState<REFRESH_STATE>(
+    REFRESH_STATE.UNKNOWN
+  );
+  const dashboard = useAppSelector((state) => state.dashboard);
   const courseTileList = [
     {
       name: "STAT1603: Introduction to Statistics",
@@ -36,11 +51,28 @@ const CourseHomePage = () => {
             Refresh
           </Text>
         }
-        onPress={() =>
-          console.log(
-            "Opening loading modal, making network req, projecting..."
-          )
-        }
+        onPress={async () => {
+          try {
+            setRefreshState(REFRESH_STATE.ENCRYPTING);
+            setOpenScrapeModal(true);
+            // const publicKey = await getPublicEncryptionKey();
+            const { username, password } = encryptCredentials("");
+            setRefreshState(REFRESH_STATE.FETCHING);
+            const scrapedData = await fetchRefreshedData(username, password);
+            setRefreshState(REFRESH_STATE.PROJECTING);
+            await updateModules(scrapedData);
+            setRefreshState(REFRESH_STATE.COMPLETE);
+          } catch (e) {
+            console.log(e);
+          } finally {
+            setOpenScrapeModal(false);
+            setRefreshState(REFRESH_STATE.UNKNOWN);
+          }
+        }}
+      />
+      <ScrapeProgressModal
+        isOpen={openScrapeModal}
+        refreshState={refreshState}
       />
       <Box paddingX='4'>
         <Box>
@@ -51,22 +83,22 @@ const CourseHomePage = () => {
         <Box paddingLeft='2'>
           <Box marginBottom='5'>
             <Text fontSize='lg' fontWeight='semibold'>
-              Last updated at 23/10/2021 3:17PM
+              Last updated at {dashboard.lastUpdatedTime}
             </Text>
           </Box>
           <Box>
             <OverviewText
-              text='3 modules added'
+              text={`${dashboard.added.length} modules added`}
               iconColor='#0ea5e9'
               iconName='add-circle'
             />
             <OverviewText
-              text='2 modules modified'
+              text={`${dashboard.modified.length} modules modified`}
               iconColor='#f59e0b'
               iconName='information-circle'
             />
             <OverviewText
-              text='8 modules completed'
+              text={`${dashboard.completed.length} modules completed`}
               iconColor='#10b981'
               iconName='checkmark-circle'
             />

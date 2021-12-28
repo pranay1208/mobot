@@ -26,12 +26,14 @@ interface DashboardReducerState {
   added: AppCourseData[];
   modified: AppCourseData[];
   completed: AppCourseData[];
+  lastUpdatedTime: string;
 }
 
 const baseDashboardState: DashboardReducerState = {
   added: [],
   modified: [],
   completed: [],
+  lastUpdatedTime: "",
 };
 
 export const dashboardReducer = (
@@ -48,12 +50,14 @@ export const dashboardReducer = (
         added: state.added.filter(filterCondition),
         modified: state.modified.filter(filterCondition),
         completed: state.completed.filter(filterCondition),
+        lastUpdatedTime: state.lastUpdatedTime,
       };
     case UPDATE_MODULES:
       return {
         added: action.payload.added,
         modified: action.payload.modified,
         completed: action.payload.completed,
+        lastUpdatedTime: new Date().toLocaleString(),
       };
     default:
       return state;

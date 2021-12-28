@@ -3,9 +3,7 @@ import { AppCourseData, ProjectionResult } from "../interfaces/interface";
 import { reduxStore } from "../redux";
 import { updateModuleAction } from "../redux/actions/moduleActions";
 
-const updateLocalCourses = async (
-  scrapedData: ScrapeResponse[]
-): Promise<void> => {
+const updateModules = async (scrapedData: ScrapeResponse[]): Promise<void> => {
   const moduleData = reduxStore.getState().modules;
   const [current, updated] = await Promise.all([
     sortCourseData(moduleData) as Promise<AppCourseData[]>,
@@ -113,4 +111,4 @@ const moduleHasBeenModified = (
   );
 };
 
-export default updateLocalCourses;
+export default updateModules;

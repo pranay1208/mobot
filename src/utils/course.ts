@@ -6,6 +6,9 @@ export const getCourseProgress = (courseUrl: string): number => {
     (mod) => mod.courseUrl === courseUrl
   );
   const total = thisCourseModules.length;
+  if (total === 0) {
+    return 0;
+  }
   const completed = thisCourseModules.filter((mod) => mod.completed).length;
-  return Math.floor((total / completed) * 100);
+  return Math.floor((completed / total) * 100);
 };

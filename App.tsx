@@ -4,9 +4,10 @@ import React from "react";
 import { Provider } from "react-redux";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
+import { PersistGate } from "redux-persist/integration/react";
 
 import MainCoursePage from "./src/pages/courses/MainCoursePage";
-import { reduxStore } from "./src/redux";
+import { persistor, reduxStore } from "./src/redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { RootDrawerParamList } from "./src/interfaces/navigatorInterfaces";
 import NotificationListPage from "./src/pages/notifications/NotificationListPage";
@@ -85,7 +86,9 @@ function AppContent() {
 export default function App() {
   return (
     <Provider store={reduxStore}>
-      <AppContent />
+      <PersistGate persistor={persistor} loading={null}>
+        <AppContent />
+      </PersistGate>
     </Provider>
   );
 }

@@ -1,8 +1,18 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { createStore } from "redux";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import rootReducer from "./reducers";
 
-export const reduxStore = createStore(rootReducer);
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+export const reduxStore = createStore(
+  persistReducer(persistConfig, rootReducer)
+);
+export const persistor = persistStore(reduxStore);
 
 type RootState = ReturnType<typeof reduxStore.getState>;
 type AppDispatch = typeof reduxStore.dispatch;

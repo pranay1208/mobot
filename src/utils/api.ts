@@ -14,7 +14,7 @@ export const getPublicEncryptionKey = async (): Promise<string> => {
 export const encryptCredentials = (
   publicKey: string
 ): { username: string; password: string } => {
-  const PUBLIC_KEY = new NodeRSA(publicKey);
+  // const PUBLIC_KEY = new NodeRSA(publicKey);
   const credentials = reduxStore.getState().credentials;
   const username = credentials.username;
   const rawPwd = credentials.password;

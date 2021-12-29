@@ -23,7 +23,11 @@ const NotificationListPage = () => {
           />
         )}
         renderHiddenItem={(data, rowMap) => (
-          <NotificationSwipeHiddenContent key={data.index} index={data.index} />
+          <NotificationSwipeHiddenContent
+            key={data.index}
+            index={data.index}
+            closeRow={() => rowMap[data.index].closeRowWithoutAnimation()}
+          />
         )}
         rightOpenValue={-70}
         previewOpenDelay={3000}

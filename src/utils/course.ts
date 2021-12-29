@@ -50,3 +50,7 @@ const isImportantUpdate = (type: ModuleType): boolean => {
     type === ModuleType.QUIZ
   );
 };
+
+export const isAssignment = (type: ModuleType): boolean => {
+  return type === ModuleType.ASSIGNMENT || type === ModuleType.TURNITIN;
+};

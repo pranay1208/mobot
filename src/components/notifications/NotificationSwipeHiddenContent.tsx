@@ -4,7 +4,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { useAppDispatch } from "../../redux";
 import { dismissNotificationAction } from "../../redux/actions/notifActions";
 
-const NotificationSwipeHiddenContent = ({ index }: { index: number }) => {
+interface NotificationSwipeHiddenContentInterface {
+  index: number;
+  closeRow: () => void;
+}
+const NotificationSwipeHiddenContent = ({
+  index,
+  closeRow,
+}: NotificationSwipeHiddenContentInterface) => {
   const dispatch = useAppDispatch();
   return (
     <HStack flex='1' pl='2' bg='white'>
@@ -13,7 +20,10 @@ const NotificationSwipeHiddenContent = ({ index }: { index: number }) => {
         w='70'
         ml='auto'
         justifyContent='center'
-        onPress={() => dispatch(dismissNotificationAction(index))}
+        onPress={() => {
+          closeRow();
+          dispatch(dismissNotificationAction(index));
+        }}
         _pressed={{
           opacity: 0.7,
         }}

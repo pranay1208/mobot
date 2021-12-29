@@ -86,7 +86,7 @@ export const coursesReducer = (
 export const notificationsDurationReducer = (
   state: number[] = [],
   action: AnyAction
-) => {
+): number[] => {
   switch (action.type) {
     case ADD_NEW_NOTIFICATION:
       if (state.includes(action.payload.numDays)) {

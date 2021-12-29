@@ -2,17 +2,85 @@ import { ScrapeResponse } from "../interfaces/apiInterface";
 import { AppCourseData, ProjectionResult } from "../interfaces/interface";
 import { reduxStore } from "../redux";
 import { updateModuleAction } from "../redux/actions/moduleActions";
+import {
+  DeadlineNotifInformation,
+  refreshUpdateNotifAction,
+} from "../redux/actions/notifActions";
+import { isAssignment } from "./course";
 
 const updateModules = async (scrapedData: ScrapeResponse[]): Promise<void> => {
   const moduleData = reduxStore.getState().modules;
+  const courses = reduxStore.getState().courses;
   const [current, updated] = await Promise.all([
     sortCourseData(moduleData) as Promise<AppCourseData[]>,
     sortCourseData(scrapedData),
   ]);
+  const courseUrlToName: Record<string, string> = {};
+  courses.forEach(
+    (course) => (courseUrlToName[course.courseUrl] = course.courseName)
+  );
   //Project data
   const projectionResult = projectData(current, updated);
+  const addedResources: Record<string, string> = {};
+  const newDeadlines: DeadlineNotifInformation[] = [];
+  const modifiedResources: Record<string, string> = {};
+  const modDeadlines: DeadlineNotifInformation[] = [];
+  projectionResult.added.forEach((add) => {
+    if (!(add.courseUrl in addedResources)) {
+      addedResources[add.courseUrl] = courseUrlToName[add.courseUrl];
+    }
+    if (isAssignment(add.type)) {
+      const dateInMs = new Date(add.dueDate ?? "").getTime();
+      if (isNaN(dateInMs)) return;
+      newDeadlines.push({
+        courseUrl: add.courseUrl,
+        courseName: courseUrlToName[add.courseUrl],
+        resourceUrl: add.resourceUrl,
+        dueDate: dateInMs,
+      });
+    }
+  });
+  projectionResult.modified.forEach((mod) => {
+    if (!(mod.courseUrl in modifiedResources)) {
+      modifiedResources[mod.courseUrl] = courseUrlToName[mod.courseUrl];
+    }
+    if (isAssignment(mod.type)) {
+      const dateInMs = new Date(mod.dueDate ?? "").getTime();
+      if (isNaN(dateInMs)) return;
+      const ddl: DeadlineNotifInformation = {
+        courseUrl: mod.courseUrl,
+        courseName: courseUrlToName[mod.courseUrl],
+        resourceUrl: mod.resourceUrl,
+        dueDate: dateInMs,
+      };
+      //In the reducer, modDeadlines are removed, and newly added in newDeadlines
+      modDeadlines.push(ddl);
+      newDeadlines.push(ddl);
+    }
+  });
+  const addedText =
+    projectionResult.added.length === 0
+      ? ""
+      : `New modules were added for ${Object.values(addedResources).join(
+          ", "
+        )}`;
+  const modifiedText =
+    projectionResult.modified.length === 0
+      ? ""
+      : `Modules amended in ${Object.values(modifiedResources).join(", ")}`;
+  const notifDurations = reduxStore.getState().notificationDurations;
+
   //Send dispatch
   reduxStore.dispatch(updateModuleAction(projectionResult));
+  reduxStore.dispatch(
+    refreshUpdateNotifAction(
+      addedText,
+      modifiedText,
+      newDeadlines,
+      modDeadlines,
+      notifDurations
+    )
+  );
 };
 
 const projectData = (

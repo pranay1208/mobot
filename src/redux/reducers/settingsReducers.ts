@@ -83,8 +83,10 @@ export const coursesReducer = (
   }
 };
 
+const notifDurationDefaultState: number[] = [3];
+
 export const notificationsDurationReducer = (
-  state: number[] = [],
+  state: number[] = notifDurationDefaultState,
   action: AnyAction
 ): number[] => {
   switch (action.type) {
@@ -96,7 +98,7 @@ export const notificationsDurationReducer = (
     case DELETE_NOTIFICATION:
       return state.filter((days) => days !== action.payload.numDays);
     case CLEAR_ALL_DATA:
-      return [];
+      return notifDurationDefaultState;
     default:
       return state;
   }

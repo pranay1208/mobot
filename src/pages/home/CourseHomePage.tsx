@@ -1,4 +1,4 @@
-import { VStack, Box, Text, Fab, Center } from "native-base";
+import { VStack, Box, Text, Fab } from "native-base";
 import React from "react";
 import OverviewText from "../../components/home/OverviewText";
 import { Ionicons } from "@expo/vector-icons";
@@ -9,13 +9,20 @@ import ScrapeProgressModal, {
 } from "../../components/home/ScrapeProgressModal";
 import { fetchRefreshedData } from "../../utils/api";
 import updateModules from "../../utils/projection";
+import { DrawerScreenProps } from "@react-navigation/drawer";
+import { RootDrawerParamList } from "../../interfaces/navigatorInterfaces";
+import RefreshErrorModal from "../../components/home/RefreshErrorModal";
+import { AxiosError } from "axios";
+import { INTERNAL_ERROR } from "../../utils/error";
 
-const CourseHomePage = () => {
+type Props = DrawerScreenProps<RootDrawerParamList, "Home">;
+const CourseHomePage = ({ navigation }: Props) => {
   const [expandIndex, setExpandIndex] = React.useState(-1);
   const [openScrapeModal, setOpenScrapeModal] = React.useState(false);
   const [refreshState, setRefreshState] = React.useState<REFRESH_STATE>(
     REFRESH_STATE.UNKNOWN
   );
+  const [refreshError, setRefreshError] = React.useState<string | null>(null);
   const dashboard = useAppSelector((state) => state.dashboard);
   const courses = useAppSelector((state) => state.courses);
   const { username, password } = useAppSelector((state) => state.credentials);
@@ -35,12 +42,28 @@ const CourseHomePage = () => {
           try {
             setOpenScrapeModal(true);
             setRefreshState(REFRESH_STATE.FETCHING);
+            if (username === "" || password === "") {
+              navigation.navigate("Settings", {
+                openAbout: false,
+                openCourses: false,
+                openCreds: true,
+                openNotifs: false,
+              });
+              return;
+            }
             const scrapedData = await fetchRefreshedData(username, password);
             setRefreshState(REFRESH_STATE.PROJECTING);
             await updateModules(scrapedData);
             setRefreshState(REFRESH_STATE.COMPLETE);
           } catch (e) {
             console.log(e);
+            const err = e as AxiosError;
+            let errData = err.response?.data;
+            console.log(errData);
+            if (typeof errData !== "string") {
+              errData = `${INTERNAL_ERROR.name}: ${INTERNAL_ERROR.message}`;
+            }
+            setRefreshError(errData);
           } finally {
             setOpenScrapeModal(false);
             setRefreshState(REFRESH_STATE.UNKNOWN);
@@ -50,6 +73,10 @@ const CourseHomePage = () => {
       <ScrapeProgressModal
         isOpen={openScrapeModal}
         refreshState={refreshState}
+      />
+      <RefreshErrorModal
+        err={refreshError}
+        onClose={() => setRefreshError(null)}
       />
       <Box paddingX='4'>
         <Box>

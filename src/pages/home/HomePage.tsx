@@ -11,7 +11,7 @@ const HomePage = (props: Props) => {
   if (numCourses === 0) {
     return NoCourseHomePage(props);
   }
-  return <CourseHomePage />;
+  return <CourseHomePage {...props} />;
 };
 
 export default HomePage;

@@ -4,9 +4,15 @@ import NotificationItem from "../../components/notifications/NotificationItem";
 import { SwipeListView } from "react-native-swipe-list-view";
 import NotificationSwipeHiddenContent from "../../components/notifications/NotificationSwipeHiddenContent";
 import { useAppSelector } from "../../redux";
+import EmptyNotifPage from "./EmptyNotifPage";
 
 const NotificationListPage = () => {
   const notifs = useAppSelector((state) => state.notifications);
+
+  if (notifs.length === 0) {
+    return <EmptyNotifPage />;
+  }
+
   const currentTime = new Date().getTime();
   const data = notifs.filter((notif) => notif.dateAvailable < currentTime);
   return (

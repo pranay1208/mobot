@@ -20,10 +20,6 @@ const AboutModal = ({ isOpen, onClose }: ModalParamInterface) => {
               No information is stored on the cloud.
             </Text>
             <Text fontSize='lg'>
-              MoBot uses an API to retrieve course information from Moodle, and
-              sends your credentials in an encrypted form to this service.
-            </Text>
-            <Text fontSize='lg'>
               MoBot's application and the scraping API is open source and can be
               accessed through the following links:{"\n"}
               <Link

@@ -7,11 +7,7 @@ import { useAppSelector } from "../../redux";
 import ScrapeProgressModal, {
   REFRESH_STATE,
 } from "../../components/home/ScrapeProgressModal";
-import {
-  encryptCredentials,
-  fetchRefreshedData,
-  getPublicEncryptionKey,
-} from "../../utils/api";
+import { fetchRefreshedData } from "../../utils/api";
 import updateModules from "../../utils/projection";
 
 const CourseHomePage = () => {
@@ -22,7 +18,7 @@ const CourseHomePage = () => {
   );
   const dashboard = useAppSelector((state) => state.dashboard);
   const courses = useAppSelector((state) => state.courses);
-
+  const { username, password } = useAppSelector((state) => state.credentials);
   return (
     <VStack paddingTop='3'>
       <Fab
@@ -37,10 +33,7 @@ const CourseHomePage = () => {
         }
         onPress={async () => {
           try {
-            setRefreshState(REFRESH_STATE.ENCRYPTING);
             setOpenScrapeModal(true);
-            // const publicKey = await getPublicEncryptionKey();
-            const { username, password } = encryptCredentials("");
             setRefreshState(REFRESH_STATE.FETCHING);
             const scrapedData = await fetchRefreshedData(username, password);
             setRefreshState(REFRESH_STATE.PROJECTING);

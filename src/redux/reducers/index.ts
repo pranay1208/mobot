@@ -7,6 +7,7 @@ import {
   notificationsDurationReducer,
 } from "./settingsReducers";
 import { moduleReducer, dashboardReducer } from "./moduleReducer";
+import notificationReducer from "./notificationReducer";
 
 const rootReducer = combineReducers({
   credentials: credentialReducer,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   notificationDurations: notificationsDurationReducer,
   modules: moduleReducer,
   dashboard: dashboardReducer,
+  notifications: notificationReducer,
 });
 
 export default rootReducer;

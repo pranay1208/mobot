@@ -3,6 +3,8 @@ import React from "react";
 import { BACKGROUND_WHITE } from "../../colours.styles";
 import { Ionicons } from "@expo/vector-icons";
 
+import { NotificationType } from "../../interfaces/interface";
+
 const AddedIconCircle = () => {
   return (
     <Circle size='12' backgroundColor='green.500'>
@@ -27,10 +29,8 @@ const DeadlineIconCircle = () => {
   );
 };
 
-export type NotifcationType = "ADD" | "MODIFY" | "DEADLINE";
-
 export interface NotificationProp {
-  notificationType: NotifcationType;
+  notificationType: NotificationType;
   notificationText: string;
   index: number;
 }

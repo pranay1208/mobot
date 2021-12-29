@@ -12,3 +12,5 @@ export interface ProjectionResult {
   modified: AppCourseData[];
   completed: AppCourseData[];
 }
+
+export type NotificationType = "ADD" | "MODIFY" | "DEADLINE";

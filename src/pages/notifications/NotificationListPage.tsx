@@ -1,45 +1,30 @@
 import React from "react";
 import { Box } from "native-base";
-import NotificationItem, {
-  NotificationProp,
-} from "../../components/notifications/NotificationItem";
+import NotificationItem from "../../components/notifications/NotificationItem";
 import { SwipeListView } from "react-native-swipe-list-view";
 import NotificationSwipeHiddenContent from "../../components/notifications/NotificationSwipeHiddenContent";
+import { useAppSelector } from "../../redux";
 
 const NotificationListPage = () => {
-  const data: NotificationProp[] = [
-    {
-      notificationType: "ADD",
-      notificationText: "New modules added to STAT1603, COMP3258 and COMP4801",
-      index: 0,
-    },
-    {
-      notificationType: "DEADLINE",
-      notificationText: "Upcoming deadline for STAT1603",
-      index: 0,
-    },
-    {
-      notificationType: "MODIFY",
-      notificationText: "Modified resources in GEOG1012",
-      index: 0,
-    },
-  ];
+  const notifs = useAppSelector((state) => state.notifications);
+  const currentTime = new Date().getTime();
+  const data = notifs.filter((notif) => notif.dateAvailable < currentTime);
   return (
     <Box>
       <SwipeListView
         data={data}
         disableRightSwipe
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={(data, rowMap) => (
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={(data, _) => (
           <NotificationItem
             notificationText={data.item.notificationText}
             notificationType={data.item.notificationType}
             index={data.index}
           />
         )}
-        renderHiddenItem={(data, rowMap) =>
-          NotificationSwipeHiddenContent(data.index)
-        }
+        renderHiddenItem={(data, rowMap) => (
+          <NotificationSwipeHiddenContent key={data.index} index={data.index} />
+        )}
         rightOpenValue={-70}
         previewOpenDelay={3000}
       />

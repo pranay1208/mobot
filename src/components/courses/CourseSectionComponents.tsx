@@ -3,8 +3,11 @@ import { Box, HStack, Pressable, Text, VStack } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import {
   BACKGROUND_WHITE,
+  COURSE_BLUE,
+  COURSE_PURPLE,
   NOTIF_GREEN,
   NOTIF_YELLOW,
+  NOTIIF_RED,
 } from "../../colours.styles";
 import { AppCourseData } from "../../interfaces/interface";
 import { ModuleType } from "../../interfaces/apiInterface";
@@ -13,21 +16,26 @@ import { isAssignment } from "../../utils/course";
 const getIconFromModuleType = (type: ModuleType) => {
   const iconSize = 32;
   if (isAssignment(type)) {
-    return <Ionicons name='alarm-outline' size={iconSize} />;
+    return <Ionicons name='calendar' size={iconSize} color={NOTIIF_RED} />;
   }
   if (type === ModuleType.URL || type === ModuleType.PAGE) {
-    return <Ionicons name='globe-outline' size={iconSize} />;
+    return <Ionicons name='globe' size={iconSize} color={COURSE_BLUE} />;
   }
   if (type === ModuleType.FOLDER) {
-    return <Ionicons name='folder-outline' size={iconSize} />;
+    return <Ionicons name='folder' size={iconSize} color={NOTIF_YELLOW} />;
+  }
+  if (type === ModuleType.CHOICE || type === ModuleType.CHOICEGROUP) {
+    return (
+      <Ionicons name='person-circle' size={iconSize} color={COURSE_PURPLE} />
+    );
   }
   if (type === ModuleType.UNKNOWN) {
-    return <Ionicons name='help-circle-outline' size={iconSize} />;
+    return <Ionicons name='help-circle' size={iconSize} />;
   }
   if (type === ModuleType.RESOURCE) {
-    return <Ionicons name='document-outline' size={iconSize} />;
+    return <Ionicons name='document' size={iconSize} color={NOTIF_YELLOW} />;
   }
-  return <Ionicons name='book-outline' size={iconSize} />;
+  return <Ionicons name='book' size={iconSize} color={COURSE_PURPLE} />;
 };
 
 interface CourseSectionHeaderInterface {
@@ -62,7 +70,7 @@ export const CourseSectionHeader = ({
 interface CourseSectionItemInterface {
   resource: AppCourseData;
   isNewModule: boolean;
-  longPressAction: (url: string) => void;
+  longPressAction: (url: string, name: string) => void;
   pressAction: (url: string) => void;
 }
 export const CourseSectionItem = ({
@@ -73,7 +81,7 @@ export const CourseSectionItem = ({
 }: CourseSectionItemInterface) => {
   return (
     <Pressable
-      onLongPress={() => longPressAction(resource.resourceUrl)}
+      onLongPress={() => longPressAction(resource.resourceUrl, resource.name)}
       onPress={() => pressAction(resource.resourceUrl)}
     >
       <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='grey.500'>
@@ -83,7 +91,7 @@ export const CourseSectionItem = ({
             {resource.name}
           </Text>
           {isNewModule && (
-            <Ionicons name='alert-circle' size={28} color={NOTIF_YELLOW} />
+            <Ionicons name='add-circle' size={28} color={NOTIF_GREEN} />
           )}
           <Ionicons
             name={
@@ -100,14 +108,14 @@ export const CourseSectionItem = ({
 
 interface RemovedCourseSectionItemInterface {
   resource: AppCourseData;
-  pressAction: (url: string) => void;
+  pressAction: (url: string, name: string) => void;
 }
 export const RemovedCourseSectionItem = ({
   resource,
   pressAction,
 }: RemovedCourseSectionItemInterface) => {
   return (
-    <Pressable onPress={() => pressAction(resource.resourceUrl)}>
+    <Pressable onPress={() => pressAction(resource.resourceUrl, resource.name)}>
       <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='grey.500'>
         <HStack space={3}>
           {getIconFromModuleType(resource.type)}

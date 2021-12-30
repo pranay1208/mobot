@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { CourseRouterParamList } from "../../interfaces/navigatorInterfaces";
 import MainCoursePage from "./MainCoursePage";
 import IndividualCoursePage from "./IndividualCoursePage";
+import IndividualModulePage from "./IndividualModulePage";
 
 const Stack = createStackNavigator<CourseRouterParamList>();
 
@@ -22,6 +23,13 @@ const CourseRouter = () => {
         // initialParams={{ courseName: "Dummy", courseUrl: "Dummy" }}
         options={({ route }) => {
           return { title: route.params.courseName };
+        }}
+      />
+      <Stack.Screen
+        name='Module'
+        component={IndividualModulePage}
+        options={({ route }) => {
+          return { title: route.params.resourceName };
         }}
       />
     </Stack.Navigator>

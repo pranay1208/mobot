@@ -30,7 +30,9 @@ type Props = StackScreenProps<CourseRouterParamList, "Course">;
 
 const IndividualCoursePage = ({ navigation, route }: Props) => {
   const [longPressUrl, setLongPressUrl] = React.useState("");
+  const [longPressName, setLongPressName] = React.useState("");
   const [removedUrl, setRemovedUrl] = React.useState("");
+  const [removedName, setRemovedName] = React.useState("");
 
   const courseUrl = route.params.courseUrl;
   const modules = useAppSelector((state) => state.modules);
@@ -84,8 +86,17 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
               <CourseSectionItem
                 isNewModule={item.resourceUrl in newResourcesMap}
                 resource={item}
-                longPressAction={setLongPressUrl}
-                pressAction={() => navigation.navigate("Overview")}
+                longPressAction={(url, name) => {
+                  setLongPressUrl(url);
+                  setLongPressName(name);
+                }}
+                pressAction={() =>
+                  navigation.navigate("Module", {
+                    courseName: route.params.courseName,
+                    resourceName: item.name,
+                    resourceUrl: item.resourceUrl,
+                  })
+                }
               />
             );
           }}
@@ -100,19 +111,40 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
           <RemovedCourseSectionItem
             key={mod.resourceUrl}
             resource={mod}
-            pressAction={setRemovedUrl}
+            pressAction={(url, name) => {
+              setRemovedName(name);
+              setRemovedUrl(url);
+            }}
           />
         ))}
       </Box>
       <ModuleOptionsModal
         resourceUrl={longPressUrl}
-        closeAction={setLongPressUrl}
-        navigateAction={(url: string) => navigation.navigate("Overview")}
+        closeAction={(val) => {
+          setLongPressName(val);
+          setLongPressUrl(val);
+        }}
+        navigateAction={(url: string) =>
+          navigation.navigate("Module", {
+            courseName: route.params.courseName,
+            resourceName: longPressName,
+            resourceUrl: url,
+          })
+        }
       />
       <RemovedModuleOptionsModal
         resourceUrl={removedUrl}
-        closeAction={setRemovedUrl}
-        navigateAction={(url: string) => navigation.navigate("Overview")}
+        closeAction={(val) => {
+          setRemovedUrl(val);
+          setRemovedName(val);
+        }}
+        navigateAction={(url: string) =>
+          navigation.navigate("Module", {
+            courseName: route.params.courseName,
+            resourceName: removedName,
+            resourceUrl: url,
+          })
+        }
       />
     </ScrollView>
   );

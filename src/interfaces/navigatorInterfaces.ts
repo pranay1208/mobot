@@ -9,7 +9,7 @@ export type RootDrawerParamList = {
 export type CourseRouterParamList = {
   Overview: undefined;
   Course: IndividualCoursePageParams;
-  Module: undefined;
+  Module: IndividualModulePageParam;
 };
 
 interface SettingsParams {
@@ -22,4 +22,10 @@ interface SettingsParams {
 interface IndividualCoursePageParams {
   courseName: string;
   courseUrl: string;
+}
+
+interface IndividualModulePageParam {
+  courseName: string;
+  resourceName: string;
+  resourceUrl: string;
 }

@@ -6,9 +6,20 @@ export type RootDrawerParamList = {
   Settings: SettingsParams;
 };
 
+export type CourseRouterParamList = {
+  Overview: undefined;
+  Course: IndividualCoursePageParams;
+  Module: undefined;
+};
+
 interface SettingsParams {
   openCreds: boolean;
   openCourses: boolean;
   openNotifs: boolean;
   openAbout: boolean;
+}
+
+interface IndividualCoursePageParams {
+  courseName: string;
+  courseUrl: string;
 }

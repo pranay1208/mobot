@@ -15,6 +15,7 @@ import {
   CourseSectionHeader,
   CourseSectionItem,
 } from "../../components/courses/CourseSectionComponents";
+import ModuleOptionsModal from "../../components/courses/ModuleOptionsModal";
 import { AppCourseData } from "../../interfaces/interface";
 import { CourseRouterParamList } from "../../interfaces/navigatorInterfaces";
 import { useAppSelector } from "../../redux";
@@ -22,12 +23,19 @@ import { useAppSelector } from "../../redux";
 type Props = StackScreenProps<CourseRouterParamList, "Course">;
 
 const IndividualCoursePage = ({ navigation, route }: Props) => {
+  const [longPressUrl, setLongPressUrl] = React.useState("");
+
   const courseUrl = route.params.courseUrl;
   const modules = useAppSelector((state) => state.modules);
   const thisModules = modules.filter((mod) => mod.courseUrl === courseUrl);
+
   const sections: Record<string, AppCourseData[]> = {};
+  const removedModules: AppCourseData[] = [];
   thisModules.forEach((mod) => {
-    if (mod.userMarkedDeleted) return;
+    if (mod.userMarkedDeleted) {
+      removedModules.push(mod);
+      return;
+    }
     if (!(mod.sectionTitle in sections)) {
       sections[mod.sectionTitle] = [];
     }
@@ -37,6 +45,7 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
   Object.keys(sections).forEach((key) =>
     data.push({ title: key, data: sections[key] })
   );
+
   return (
     <ScrollView backgroundColor='white'>
       <Box backgroundColor={BACKGROUND_WHITE}>
@@ -56,10 +65,21 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
             return <CourseSectionHeader sectionTitle={section.title} />;
           }}
           renderItem={({ item }: { item: AppCourseData }) => {
-            return <CourseSectionItem resource={item} />;
+            return (
+              <CourseSectionItem
+                resource={item}
+                longPressAction={setLongPressUrl}
+                pressAction={() => navigation.navigate("Overview")}
+              />
+            );
           }}
         />
       </Box>
+      <ModuleOptionsModal
+        resourceUrl={longPressUrl}
+        closeAction={setLongPressUrl}
+        navigateAction={(url: string) => navigation.navigate("Overview")}
+      />
     </ScrollView>
   );
 };

@@ -4,7 +4,6 @@ import { Ionicons } from "@expo/vector-icons";
 import {
   BACKGROUND_WHITE,
   NOTIF_GREEN,
-  NOTIIF_RED,
   PRIMARY_BLUE,
 } from "../../colours.styles";
 import { AppCourseData } from "../../interfaces/interface";
@@ -38,13 +37,18 @@ export const CourseSectionHeader = ({
 
 interface CourseSectionItemInterface {
   resource: AppCourseData;
+  longPressAction: (url: string) => void;
+  pressAction: (url: string) => void;
 }
-export const CourseSectionItem = ({ resource }: CourseSectionItemInterface) => {
+export const CourseSectionItem = ({
+  resource,
+  longPressAction,
+  pressAction,
+}: CourseSectionItemInterface) => {
   return (
     <Pressable
-      onLongPress={() =>
-        console.log("Displaying modal to delete, mark complete")
-      }
+      onLongPress={() => longPressAction(resource.resourceUrl)}
+      onPress={() => pressAction(resource.resourceUrl)}
     >
       <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='grey.500'>
         <HStack space={3}>

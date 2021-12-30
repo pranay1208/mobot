@@ -4,6 +4,8 @@ import {
   UPDATE_MODULES,
   CLEAR_ALL_DATA,
   DELETE_COURSE,
+  USER_TOGGLE_MODULE_COMPLETE,
+  USER_TOGGLE_REMOVE_MODULE,
 } from "../actions/actionNames";
 
 export const moduleReducer = (
@@ -17,6 +19,20 @@ export const moduleReducer = (
       return state.filter((mod) => mod.courseUrl !== action.payload.courseUrl);
     case UPDATE_MODULES:
       return action.payload.finalProj as AppCourseData[];
+    case USER_TOGGLE_MODULE_COMPLETE:
+      return state.map((mod) => {
+        if (mod.resourceUrl !== action.payload.resourceUrl) {
+          return mod;
+        }
+        return { ...mod, userMarkedCompleted: !mod.userMarkedCompleted };
+      });
+    case USER_TOGGLE_REMOVE_MODULE:
+      return state.map((mod) => {
+        if (mod.resourceUrl !== action.payload.resourceUrl) {
+          return mod;
+        }
+        return { ...mod, userMarkedDeleted: !mod.userMarkedDeleted };
+      });
     default:
       return state;
   }

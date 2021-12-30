@@ -1,15 +1,15 @@
 import React from "react";
 import { Box, FlatList, Text } from "native-base";
-import { DrawerScreenProps } from "@react-navigation/drawer";
 import CourseCard, {
   CourseCardProps,
 } from "../../components/courses/CourseCard";
-import { RootDrawerParamList } from "../../interfaces/navigatorInterfaces";
+import { CourseRouterParamList } from "../../interfaces/navigatorInterfaces";
 import { useAppSelector } from "../../redux";
 import { getCourseProgress } from "../../utils/course";
 import { ModuleType } from "../../interfaces/apiInterface";
+import { StackScreenProps } from "@react-navigation/stack";
 
-type Props = DrawerScreenProps<RootDrawerParamList, "Courses">;
+type Props = StackScreenProps<CourseRouterParamList, "Overview">;
 
 const MainCoursePage = ({ navigation }: Props) => {
   const courses = useAppSelector((state) => state.courses);
@@ -56,6 +56,12 @@ const MainCoursePage = ({ navigation }: Props) => {
       numberQuizzes,
       numberResources,
       progress: getCourseProgress(course.courseUrl),
+      onPressAction: () => {
+        navigation.navigate("Course", {
+          courseName: course.courseName,
+          courseUrl: course.courseUrl,
+        });
+      },
     };
   });
   return (

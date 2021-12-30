@@ -5,13 +5,15 @@ import { reduxStore } from "../redux";
 export const getCourseProgress = (courseUrl: string): number => {
   const modules = reduxStore.getState().modules;
   const thisCourseModules = modules.filter(
-    (mod) => mod.courseUrl === courseUrl
+    (mod) => mod.courseUrl === courseUrl && !mod.userMarkedDeleted
   );
   const total = thisCourseModules.length;
   if (total === 0) {
     return 0;
   }
-  const completed = thisCourseModules.filter((mod) => mod.completed).length;
+  const completed = thisCourseModules.filter(
+    (mod) => mod.userMarkedCompleted
+  ).length;
   return Math.floor((completed / total) * 100);
 };
 

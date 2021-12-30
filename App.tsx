@@ -6,7 +6,6 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { PersistGate } from "redux-persist/integration/react";
 
-import MainCoursePage from "./src/pages/courses/MainCoursePage";
 import { persistor, reduxStore } from "./src/redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { RootDrawerParamList } from "./src/interfaces/navigatorInterfaces";
@@ -15,6 +14,7 @@ import AppDrawer from "./src/components/AppDrawer";
 import { PRIMARY_BLUE } from "./src/colours.styles";
 import SettingsPage from "./src/pages/settings/SettingsPage";
 import HomePage from "./src/pages/home/HomePage";
+import CourseRouter from "./src/pages/courses/CourseRouter";
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
@@ -24,7 +24,7 @@ function AppContent() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName='Home'
+          initialRouteName='Courses'
           drawerContent={(props) => <AppDrawer {...props} />}
           screenOptions={{
             headerTintColor: "#FFF",
@@ -46,7 +46,7 @@ function AppContent() {
           />
           <Drawer.Screen
             name='Courses'
-            component={MainCoursePage}
+            component={CourseRouter}
             options={{
               drawerIcon: ({ color, size }) => (
                 <Ionicons name='book' color={color} size={size} />

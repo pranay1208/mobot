@@ -18,6 +18,7 @@ export interface CourseCardProps {
   numberQuizzes: number;
   numberResources: number;
   progress: number;
+  onPressAction: () => void;
 }
 
 const CourseInfoText = (props: { value: string }) => {
@@ -30,7 +31,7 @@ const CourseInfoText = (props: { value: string }) => {
 
 const CourseCard = (props: CourseCardProps) => {
   return (
-    <Pressable marginX='3' marginY='2' onPress={() => console.log("Hello")}>
+    <Pressable marginX='3' marginY='2' onPress={() => props.onPressAction()}>
       <Box
         rounded='md'
         borderColor='gray.300'

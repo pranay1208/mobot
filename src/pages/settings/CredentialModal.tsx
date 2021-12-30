@@ -6,7 +6,6 @@ import {
   Button,
   Center,
   Pressable,
-  Text,
 } from "native-base";
 import { Ionicons } from "@expo/vector-icons";
 import {

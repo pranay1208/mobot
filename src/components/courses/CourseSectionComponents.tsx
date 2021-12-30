@@ -46,13 +46,7 @@ export const CourseSectionItem = ({ resource }: CourseSectionItemInterface) => {
         console.log("Displaying modal to delete, mark complete")
       }
     >
-      <Box
-        paddingX='3'
-        paddingY='1'
-        borderWidth='1'
-        borderColor='grey.500'
-        backgroundColor={BACKGROUND_WHITE}
-      >
+      <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='grey.500'>
         <HStack space={3}>
           <Ionicons name='bookmarks' size={32} />
           <Text fontSize='lg' fontWeight='semibold' flex='1' isTruncated>

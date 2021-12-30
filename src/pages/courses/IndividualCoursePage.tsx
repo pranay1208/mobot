@@ -3,19 +3,25 @@ import {
   Box,
   Text,
   Button,
-  Center,
-  Heading,
   SectionList,
   HStack,
   ScrollView,
 } from "native-base";
 import React from "react";
-import { BACKGROUND_WHITE } from "../../colours.styles";
+import {
+  BACKGROUND_WHITE,
+  NOTIIF_RED,
+  PRIMARY_BLUE,
+} from "../../colours.styles";
 import {
   CourseSectionHeader,
   CourseSectionItem,
+  RemovedCourseSectionItem,
 } from "../../components/courses/CourseSectionComponents";
-import ModuleOptionsModal from "../../components/courses/ModuleOptionsModal";
+import {
+  ModuleOptionsModal,
+  RemovedModuleOptionsModal,
+} from "../../components/courses/ModuleOptionsModal";
 import { AppCourseData } from "../../interfaces/interface";
 import { CourseRouterParamList } from "../../interfaces/navigatorInterfaces";
 import { useAppSelector } from "../../redux";
@@ -24,9 +30,13 @@ type Props = StackScreenProps<CourseRouterParamList, "Course">;
 
 const IndividualCoursePage = ({ navigation, route }: Props) => {
   const [longPressUrl, setLongPressUrl] = React.useState("");
+  const [removedUrl, setRemovedUrl] = React.useState("");
 
   const courseUrl = route.params.courseUrl;
   const modules = useAppSelector((state) => state.modules);
+  const added = useAppSelector((state) => state.dashboard.added);
+  const newResourcesMap: Record<string, boolean> = {};
+  added.forEach((mod) => (newResourcesMap[mod.resourceUrl] = true));
   const thisModules = modules.filter((mod) => mod.courseUrl === courseUrl);
 
   const sections: Record<string, AppCourseData[]> = {};
@@ -62,11 +72,17 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
           sections={data}
           keyExtractor={(item, index) => index.toString()}
           renderSectionHeader={({ section }) => {
-            return <CourseSectionHeader sectionTitle={section.title} />;
+            return (
+              <CourseSectionHeader
+                sectionTitle={section.title}
+                headerColor={PRIMARY_BLUE}
+              />
+            );
           }}
           renderItem={({ item }: { item: AppCourseData }) => {
             return (
               <CourseSectionItem
+                isNewModule={item.resourceUrl in newResourcesMap}
                 resource={item}
                 longPressAction={setLongPressUrl}
                 pressAction={() => navigation.navigate("Overview")}
@@ -74,10 +90,28 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
             );
           }}
         />
+        {removedModules.length > 0 && (
+          <CourseSectionHeader
+            sectionTitle='Removed Courses'
+            headerColor={NOTIIF_RED}
+          />
+        )}
+        {removedModules.map((mod) => (
+          <RemovedCourseSectionItem
+            key={mod.resourceUrl}
+            resource={mod}
+            pressAction={setRemovedUrl}
+          />
+        ))}
       </Box>
       <ModuleOptionsModal
         resourceUrl={longPressUrl}
         closeAction={setLongPressUrl}
+        navigateAction={(url: string) => navigation.navigate("Overview")}
+      />
+      <RemovedModuleOptionsModal
+        resourceUrl={removedUrl}
+        closeAction={setRemovedUrl}
         navigateAction={(url: string) => navigation.navigate("Overview")}
       />
     </ScrollView>

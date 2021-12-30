@@ -14,7 +14,7 @@ export interface ScrapeResponse {
   courseUrl: string;
   type: ModuleType;
   name: string;
-  dueDate: string | null; // TODO: Decide type (whether string or number of ms since 1970)
+  dueDate: string | null;
   sectionTitle: string;
   resourceUrl: string;
   completed: boolean;

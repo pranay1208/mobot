@@ -7,6 +7,7 @@ import rootReducer from "./reducers";
 const persistConfig = {
   key: "root",
   storage,
+  blacklist: ["credentials"],
 };
 
 export const reduxStore = createStore(

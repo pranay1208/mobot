@@ -1,5 +1,14 @@
 import React from "react";
-import { Modal, Input, FormControl, Button, Center } from "native-base";
+import {
+  Modal,
+  Input,
+  FormControl,
+  Button,
+  Center,
+  Pressable,
+  Text,
+} from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 import {
   ModalParamInterface,
   CommonModalCloseButton,
@@ -18,10 +27,12 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
   const dispatch = useAppDispatch();
   const [username, setUsername] = React.useState(credentials.username);
   const [password, setPassword] = React.useState(credentials.password);
+  const [hidePwd, setHidePwd] = React.useState(true);
 
   useEffect(() => {
     setUsername(credentials.username);
     setPassword(credentials.password);
+    setHidePwd(true);
   }, [isOpen]);
 
   return (
@@ -55,12 +66,17 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
               borderWidth='1'
               borderColor='black'
               size='md'
-              type='password'
+              type={hidePwd ? "password" : "text"}
               placeholder='Password'
               value={password}
               onChangeText={setPassword}
               marginBottom='2'
-            ></Input>
+              InputRightElement={
+                <Pressable paddingX='2' onPress={() => setHidePwd(!hidePwd)}>
+                  <Ionicons name={hidePwd ? "eye-off" : "eye"} size={24} />
+                </Pressable>
+              }
+            />
             <FormControl.ErrorMessage>
               Password is empty
             </FormControl.ErrorMessage>

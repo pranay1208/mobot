@@ -20,6 +20,9 @@ const AboutModal = ({ isOpen, onClose }: ModalParamInterface) => {
               No information is stored on the cloud.
             </Text>
             <Text fontSize='lg'>
+              MoBot does not save your Moodle credentials
+            </Text>
+            <Text fontSize='lg'>
               MoBot's application and the scraping API is open source and can be
               accessed through the following links:{"\n"}
               <Link

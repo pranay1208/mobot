@@ -14,6 +14,7 @@ import {
   NOTIIF_RED,
   PRIMARY_BLUE,
 } from "../../colours.styles";
+import ArrangeSectionsModal from "../../components/courses/ArrangeSectionsModal";
 import {
   CourseSectionHeader,
   CourseSectionItem,
@@ -34,10 +35,14 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
   const [longPressName, setLongPressName] = React.useState("");
   const [removedUrl, setRemovedUrl] = React.useState("");
   const [removedName, setRemovedName] = React.useState("");
+  const [arrangeSections, setArrangeSections] = React.useState(false);
 
   const courseUrl = route.params.courseUrl;
   const modules = useAppSelector((state) => state.modules);
   const added = useAppSelector((state) => state.dashboard.added);
+  const courseSections = useAppSelector(
+    (state) => state.sections[courseUrl] ?? []
+  );
   const newResourcesMap: Record<string, boolean> = {};
   added.forEach((mod) => (newResourcesMap[mod.resourceUrl] = true));
   const thisModules = modules.filter((mod) => mod.courseUrl === courseUrl);
@@ -70,6 +75,13 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
   Object.keys(sections).forEach((key) =>
     data.push({ title: key, data: sections[key] })
   );
+  data.sort((a, b) => {
+    let indexA = courseSections.indexOf(a.title);
+    let indexB = courseSections.indexOf(b.title);
+    indexA = indexA === -1 ? courseSections.length : indexA;
+    indexB = indexB === -1 ? courseSections.length : indexB;
+    return indexA - indexB;
+  });
 
   return (
     <ScrollView backgroundColor='white'>
@@ -80,12 +92,17 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
               Modules
             </Text>
           </Box>
-          <Button colorScheme='emerald'>Arrange Sections</Button>
+          <Button
+            colorScheme='emerald'
+            onPress={() => setArrangeSections(true)}
+          >
+            Arrange Sections
+          </Button>
         </HStack>
         <SectionList
           marginTop='2'
           sections={data}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item: AppCourseData) => item.resourceUrl}
           renderSectionHeader={({ section }) => {
             return (
               <CourseSectionHeader
@@ -158,6 +175,12 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
             resourceUrl: url,
           })
         }
+      />
+      <ArrangeSectionsModal
+        isOpen={arrangeSections}
+        onClose={setArrangeSections}
+        sectionList={data.map((s) => s.title)}
+        courseUrl={route.params.courseUrl}
       />
     </ScrollView>
   );

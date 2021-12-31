@@ -6,6 +6,8 @@ import {
   DELETE_COURSE,
   USER_TOGGLE_MODULE_COMPLETE,
   USER_TOGGLE_REMOVE_MODULE,
+  ADD_NEW_COURSE,
+  UPDATE_SECTION_ORDER,
 } from "../actions/actionNames";
 
 export const moduleReducer = (
@@ -75,6 +77,23 @@ export const dashboardReducer = (
         completed: action.payload.completed,
         lastUpdatedTime: new Date().toLocaleString(),
       };
+    default:
+      return state;
+  }
+};
+
+export const sectionsReducer = (
+  state: Record<string, string[]> = {},
+  action: AnyAction
+) => {
+  switch (action.type) {
+    case CLEAR_ALL_DATA:
+      return {};
+    case ADD_NEW_COURSE:
+    case DELETE_COURSE:
+      return { ...state, [action.payload.courseUrl]: [] };
+    case UPDATE_SECTION_ORDER:
+      return { ...state, [action.payload.courseUrl]: action.payload.newOrder };
     default:
       return state;
   }

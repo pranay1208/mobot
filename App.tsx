@@ -24,7 +24,7 @@ function AppContent() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName='Courses'
+          initialRouteName='Home'
           drawerContent={(props) => <AppDrawer {...props} />}
           screenOptions={{
             headerTintColor: "#FFF",

@@ -1,12 +1,12 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStore } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
-import storage from "redux-persist/lib/storage";
 import rootReducer from "./reducers";
 
 const persistConfig = {
   key: "root",
-  storage,
+  storage: AsyncStorage,
   blacklist: ["credentials"],
 };
 

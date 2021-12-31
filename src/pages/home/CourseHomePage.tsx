@@ -29,7 +29,7 @@ const CourseHomePage = ({ navigation }: Props) => {
   return (
     <VStack paddingTop='3'>
       <Fab
-        position='fixed'
+        position='absolute'
         borderRadius='full'
         colorScheme='emerald'
         icon={<Ionicons name='refresh' size={24} color='white' />}

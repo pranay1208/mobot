@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 const EmptyNotifPage = () => {
   return (
-    <Box paddingTop='15'>
+    <Box paddingTop='15' safeAreaTop>
       <Center>
         <Text fontSize='2xl' fontWeight='semibold'>
           No active notifications

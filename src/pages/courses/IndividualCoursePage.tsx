@@ -4,6 +4,7 @@ import {
   Text,
   Button,
   SectionList,
+  Center,
   HStack,
   ScrollView,
 } from "native-base";
@@ -40,6 +41,18 @@ const IndividualCoursePage = ({ navigation, route }: Props) => {
   const newResourcesMap: Record<string, boolean> = {};
   added.forEach((mod) => (newResourcesMap[mod.resourceUrl] = true));
   const thisModules = modules.filter((mod) => mod.courseUrl === courseUrl);
+
+  if (thisModules.length === 0) {
+    return (
+      <Box safeAreaTop marginTop='4'>
+        <Center>
+          <Text fontSize='xl' fontWeight='semibold'>
+            No modules found for this course
+          </Text>
+        </Center>
+      </Box>
+    );
+  }
 
   const sections: Record<string, AppCourseData[]> = {};
   const removedModules: AppCourseData[] = [];

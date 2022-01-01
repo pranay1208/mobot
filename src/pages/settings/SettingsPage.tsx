@@ -7,12 +7,27 @@ import SettingOptionTile, {
 } from "../../components/settings/SettingsOptionTile";
 import AboutModal from "./AboutModal";
 import NotificationModal from "./NotificationModal";
+import { DrawerScreenProps } from "@react-navigation/drawer";
+import { RootDrawerParamList } from "../../interfaces/navigatorInterfaces";
+import { useEffect } from "react";
+import ClearAllDataModal from "./ClearAllDataModal";
 
-const SettingsPage = () => {
+type Props = DrawerScreenProps<RootDrawerParamList, "Settings">;
+const SettingsPage = ({ route }: Props) => {
+  const { openAbout, openCourses, openCreds, openNotifs } = route.params;
   const [credModal, setCredModal] = React.useState(false);
   const [coursesModal, setCourseModal] = React.useState(false);
   const [notifModal, setNotifModal] = React.useState(false);
   const [aboutModal, setAboutModal] = React.useState(false);
+  const [clearAllDataModal, setClearAllDataModal] = React.useState(false);
+
+  useEffect(() => {
+    setCredModal(openCreds);
+    setCourseModal(openCourses);
+    setNotifModal(openNotifs);
+    setAboutModal(openAbout);
+  }, [route.params]);
+
   const listData: SettingOptionTileInterface[] = [
     {
       text: "Credentials",
@@ -41,7 +56,9 @@ const SettingsPage = () => {
     //TODO: This is the last thing to implement so we can set CLEAR_ALL_DATA on each reducer
     {
       text: "Clear Data",
-      onClickAction: () => {},
+      onClickAction: () => {
+        setClearAllDataModal(true);
+      },
     },
   ];
   return (
@@ -60,6 +77,10 @@ const SettingsPage = () => {
       <CoursesModal isOpen={coursesModal} onClose={setCourseModal} />
       <NotificationModal isOpen={notifModal} onClose={setNotifModal} />
       <AboutModal isOpen={aboutModal} onClose={setAboutModal} />
+      <ClearAllDataModal
+        isOpen={clearAllDataModal}
+        onClose={setClearAllDataModal}
+      />
     </>
   );
 };

@@ -4,7 +4,6 @@ import {
   Text,
   Pressable,
   Modal,
-  Heading,
   Button,
   FormControl,
   Input,
@@ -15,11 +14,11 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "./ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+  CommonModalDangerHeader,
+} from "../common/ModalCommons";
 import {
-  BACKGROUND_WHITE,
   LIST_OF_COURSE_COLORS,
   NOTIIF_RED,
   PRIMARY_BLUE,
@@ -31,6 +30,7 @@ import {
   editCourseAction,
 } from "../../redux/actions/settingsActions";
 import { ColorCircle, ColorCircleRow } from "./CourseColorSelector";
+import { useEffect } from "react";
 
 export const ModalCourseTile = (
   courseName: string,
@@ -88,24 +88,20 @@ export const ModalCourseTile = (
   );
 };
 
-interface CourseSettingsModalParams extends ModalParamInterface {
-  courseIndex: number;
+interface DeleteCourseModalParams extends ModalParamInterface {
+  courseUrl: string;
 }
 export const DeleteCourseConfirmationModal = ({
   isOpen,
   onClose,
-  courseIndex,
-}: CourseSettingsModalParams) => {
+  courseUrl,
+}: DeleteCourseModalParams) => {
   const dispatch = useAppDispatch();
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <Modal.Header backgroundColor={NOTIIF_RED} tintColor={BACKGROUND_WHITE}>
-          <Heading color='white' size='md'>
-            Delete Course
-          </Heading>
-        </Modal.Header>
+        <CommonModalCloseButton />
+        <CommonModalDangerHeader title='Delete course' />
         <Modal.Body>
           <Text fontSize='lg' paddingX='2'>
             Are you sure you want to delete this course? This will delete all
@@ -123,7 +119,7 @@ export const DeleteCourseConfirmationModal = ({
             </Button>
             <Button
               onPress={() => {
-                dispatch(deleteCourseAction(courseIndex));
+                dispatch(deleteCourseAction(courseUrl));
                 onClose(false);
               }}
               backgroundColor={NOTIIF_RED}
@@ -137,11 +133,14 @@ export const DeleteCourseConfirmationModal = ({
   );
 };
 
+interface EditCourseModalParams extends ModalParamInterface {
+  courseIndex: number;
+}
 export const EditCourseInfoModal = ({
   isOpen,
   onClose,
   courseIndex,
-}: CourseSettingsModalParams) => {
+}: EditCourseModalParams) => {
   const selectedTile = useAppSelector((state) => {
     return state.courses[courseIndex];
   });
@@ -153,14 +152,14 @@ export const EditCourseInfoModal = ({
     selectedTile?.courseUrl ?? ""
   );
   const [courseColor, setCourseColor] = React.useState(
-    selectedTile.courseColor ?? ""
+    selectedTile?.courseColor ?? ""
   );
   const editToast = useToast();
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Edit Course' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Edit Course' />
         <Modal.Body>
           <FormControl marginBottom='2' isInvalid={courseName.trim() === ""}>
             <FormControl.Label>Course Name</FormControl.Label>
@@ -237,6 +236,14 @@ export const EditCourseInfoModal = ({
   );
 };
 
+const COURSE_URL_REGEX =
+  /https?:\/\/moodle.hku.hk\/course\/view\.php\?id=\d+\/?/;
+
+const isValidCourseUrl = (url: string): boolean => {
+  const result = url.trim().match(COURSE_URL_REGEX);
+  return result !== null && result[0] === result.input;
+};
+
 export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
   const dispatch = useAppDispatch();
   const [courseName, setCourseName] = React.useState("");
@@ -245,16 +252,16 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
     LIST_OF_COURSE_COLORS[Math.floor(Math.random() * 6)]
   );
   const addToast = useToast();
-  const cleanClose = () => {
+  useEffect(() => {
     setCourseName("");
     setCourseUrl("");
-    onClose(false);
-  };
+    setCourseColor(LIST_OF_COURSE_COLORS[Math.floor(Math.random() * 6)]);
+  }, [isOpen]);
   return (
-    <Modal isOpen={isOpen} onClose={cleanClose} size='xl'>
+    <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Add Course' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Add Course' />
         <Modal.Body>
           <FormControl marginBottom='2' isInvalid={courseName.trim() === ""}>
             <FormControl.Label>Course Name</FormControl.Label>
@@ -269,7 +276,10 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
               What you would like to refer to the course as
             </FormControl.HelperText>
           </FormControl>
-          <FormControl marginBottom='2' isInvalid={courseUrl.trim() === ""}>
+          <FormControl
+            marginBottom='2'
+            isInvalid={!isValidCourseUrl(courseUrl)}
+          >
             <FormControl.Label>Course URL</FormControl.Label>
             <Input
               value={courseUrl}
@@ -281,6 +291,9 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
             <FormControl.HelperText fontWeight='semibold'>
               This is the course's URL on Moodle
             </FormControl.HelperText>
+            <FormControl.ErrorMessage>
+              The URL does not match the expected format
+            </FormControl.ErrorMessage>
           </FormControl>
           <Box>
             <FormControl.Label>Color</FormControl.Label>
@@ -295,7 +308,7 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
             <Button
               variant='ghost'
               colorScheme='blueGray'
-              onPress={() => cleanClose()}
+              onPress={() => onClose(false)}
             >
               Cancel
             </Button>
@@ -303,7 +316,7 @@ export const AddCourseModal = ({ isOpen, onClose }: ModalParamInterface) => {
               onPress={() => {
                 if (courseName !== "" && courseUrl !== "") {
                   dispatch(addCourseAction(courseName, courseUrl, courseColor));
-                  cleanClose();
+                  onClose(false);
                 } else {
                   addToast.show({
                     description: "Please fill in all fields",

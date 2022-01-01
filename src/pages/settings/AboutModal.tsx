@@ -2,17 +2,17 @@ import React from "react";
 import { Modal, Button, Text, Link, VStack } from "native-base";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "../../components/settings/ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+} from "../../components/common/ModalCommons";
 import { PRIMARY_BLUE } from "../../colours.styles";
 
 const AboutModal = ({ isOpen, onClose }: ModalParamInterface) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='About' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='About' />
         <Modal.Body>
           <VStack space={2}>
             <Text fontSize='lg'>
@@ -20,8 +20,7 @@ const AboutModal = ({ isOpen, onClose }: ModalParamInterface) => {
               No information is stored on the cloud.
             </Text>
             <Text fontSize='lg'>
-              MoBot uses an API to retrieve course information from Moodle, and
-              sends your credentials in an encrypted form to this service.
+              MoBot does not save your Moodle credentials
             </Text>
             <Text fontSize='lg'>
               MoBot's application and the scraping API is open source and can be

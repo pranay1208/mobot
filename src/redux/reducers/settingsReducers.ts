@@ -73,16 +73,22 @@ export const coursesReducer = (
         };
       });
     case DELETE_COURSE:
-      return state.filter((_, index) => index !== action.payload.courseIndex);
+      return state.filter(
+        (course) => course.courseUrl !== action.payload.courseUrl
+      );
+    case CLEAR_ALL_DATA:
+      return [];
     default:
       return state;
   }
 };
 
+const notifDurationDefaultState: number[] = [3];
+
 export const notificationsDurationReducer = (
-  state: number[] = [],
+  state: number[] = notifDurationDefaultState,
   action: AnyAction
-) => {
+): number[] => {
   switch (action.type) {
     case ADD_NEW_NOTIFICATION:
       if (state.includes(action.payload.numDays)) {
@@ -91,6 +97,8 @@ export const notificationsDurationReducer = (
       return [...state, action.payload.numDays];
     case DELETE_NOTIFICATION:
       return state.filter((days) => days !== action.payload.numDays);
+    case CLEAR_ALL_DATA:
+      return notifDurationDefaultState;
     default:
       return state;
   }

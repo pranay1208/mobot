@@ -4,68 +4,48 @@ import {
   Input,
   FormControl,
   Button,
-  Checkbox,
-  Box,
-  Text,
+  Center,
+  Pressable,
 } from "native-base";
+import { Ionicons } from "@expo/vector-icons";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "../../components/settings/ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+} from "../../components/common/ModalCommons";
 import { PRIMARY_BLUE } from "../../colours.styles";
 import { useAppDispatch, useAppSelector } from "../../redux";
 import {
-  unsaveCredentialsAction,
   saveCredentialsAction,
+  unsaveCredentialsAction,
 } from "../../redux/actions/settingsActions";
-
-const CHECKBOX_VALUE = "save";
+import { useEffect } from "react";
 
 const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
   const credentials = useAppSelector((state) => state.credentials);
   const dispatch = useAppDispatch();
-  const saveCredentialsInitValue =
-    credentials.username !== "" || credentials.password !== ""
-      ? [CHECKBOX_VALUE]
-      : [];
+  const [username, setUsername] = React.useState(credentials.username);
+  const [password, setPassword] = React.useState(credentials.password);
+  const [hidePwd, setHidePwd] = React.useState(true);
 
-  const [saveCredentials, setSaveCredentials] = React.useState(
-    saveCredentialsInitValue
-  );
-  const shouldNotTakeCreds = saveCredentials.length === 0;
-  const [username, setUsername] = React.useState(
-    shouldNotTakeCreds ? "" : credentials.username
-  );
-  const [password, setPassword] = React.useState(
-    shouldNotTakeCreds ? "" : credentials.password
-  );
-
-  const onClosedCleanup = () => {
+  useEffect(() => {
     setUsername(credentials.username);
     setPassword(credentials.password);
-    setSaveCredentials(saveCredentialsInitValue);
-    onClose(false);
-  };
+    setHidePwd(true);
+  }, [isOpen]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClosedCleanup} size='xl'>
+    <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Credentials' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Credentials' />
         <Modal.Body>
-          <Box marginBottom='1'>
-            <Text>
-              You will be prompted on each scrape if you choose not to save
-              credentials. Uncheck anytime to remove stored credentials
-            </Text>
-          </Box>
-          <FormControl>
+          <FormControl isInvalid={username === ""}>
             <FormControl.Label fontWeight='bold'>
               Moodle Username
             </FormControl.Label>
             <Input
-              borderWidth={shouldNotTakeCreds ? "0" : "1"}
+              borderWidth='1'
               borderColor='black'
               size='md'
               placeholder='Username'
@@ -73,51 +53,62 @@ const CredentialModal = ({ isOpen, onClose }: ModalParamInterface) => {
               onChangeText={setUsername}
               marginBottom='2'
             />
+            <FormControl.ErrorMessage>
+              Username is empty
+            </FormControl.ErrorMessage>
           </FormControl>
-          <FormControl>
+          <FormControl isInvalid={password === ""}>
             <FormControl.Label fontWeight='bold'>
               Moodle Password
             </FormControl.Label>
             <Input
-              borderWidth={shouldNotTakeCreds ? "0" : "1"}
+              borderWidth='1'
               borderColor='black'
               size='md'
-              type='password'
+              type={hidePwd ? "password" : "text"}
               placeholder='Password'
               value={password}
               onChangeText={setPassword}
               marginBottom='2'
+              InputRightElement={
+                <Pressable paddingX='2' onPress={() => setHidePwd(!hidePwd)}>
+                  <Ionicons name={hidePwd ? "eye-off" : "eye"} size={24} />
+                </Pressable>
+              }
             />
+            <FormControl.ErrorMessage>
+              Password is empty
+            </FormControl.ErrorMessage>
           </FormControl>
-          <Checkbox.Group
-            marginY='2'
-            value={saveCredentials}
-            onChange={setSaveCredentials}
-          >
-            <Checkbox value={CHECKBOX_VALUE} size='md' colorScheme='darkBlue'>
-              Remember Credentials
-            </Checkbox>
-          </Checkbox.Group>
+          <Center marginTop='2'>
+            <Button
+              colorScheme='danger'
+              onPress={() => {
+                dispatch(unsaveCredentialsAction());
+                onClose(false);
+              }}
+            >
+              Delete Credentials
+            </Button>
+          </Center>
         </Modal.Body>
         <Modal.Footer>
           <Button.Group space={2}>
             <Button
               variant='ghost'
               colorScheme='blueGray'
-              onPress={() => onClosedCleanup()}
+              onPress={() => onClose(false)}
             >
               Cancel
             </Button>
             <Button
               bgColor={PRIMARY_BLUE}
               onPress={() => {
-                if (shouldNotTakeCreds) {
-                  dispatch(unsaveCredentialsAction());
-                  onClosedCleanup();
-                } else {
-                  dispatch(saveCredentialsAction(username, password));
-                  onClose(false);
+                if (username === "" || password === "") {
+                  return;
                 }
+                dispatch(saveCredentialsAction(username, password));
+                onClose(false);
               }}
             >
               Save

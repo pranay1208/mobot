@@ -4,9 +4,9 @@ import { PRIMARY_BLUE } from "../../colours.styles";
 import AddNotificationModal from "../../components/settings/AddNotificationModal";
 import {
   ModalParamInterface,
-  SettingsModalCloseButton,
-  SettingsModalHeader,
-} from "../../components/settings/ModalCommons";
+  CommonModalCloseButton,
+  CommonModalHeader,
+} from "../../components/common/ModalCommons";
 import NotificationTile from "../../components/settings/NotificationTile";
 import { useAppDispatch, useAppSelector } from "../../redux";
 import {
@@ -21,8 +21,8 @@ const NotificationModal = ({ isOpen, onClose }: ModalParamInterface) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='xl'>
       <Modal.Content>
-        <SettingsModalCloseButton />
-        <SettingsModalHeader title='Notifications' />
+        <CommonModalCloseButton />
+        <CommonModalHeader title='Notifications' />
         <Modal.Body>
           <Box marginBottom='1'>
             <Text>

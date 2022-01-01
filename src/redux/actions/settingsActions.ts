@@ -1,6 +1,7 @@
 import {
   ADD_NEW_COURSE,
   ADD_NEW_NOTIFICATION,
+  CLEAR_ALL_DATA,
   DELETE_COURSE,
   DELETE_NOTIFICATION,
   EDIT_COURSE_INFO,
@@ -34,11 +35,11 @@ export const addCourseAction = (name: string, url: string, color: string) => {
   };
 };
 
-export const deleteCourseAction = (i: number) => {
+export const deleteCourseAction = (url: string) => {
   return {
     type: DELETE_COURSE,
     payload: {
-      courseIndex: i,
+      courseUrl: url,
     },
   };
 };
@@ -72,5 +73,12 @@ export const deleteNotificationDurationAction = (numDays: number) => {
   return {
     type: DELETE_NOTIFICATION,
     payload: { numDays },
+  };
+};
+
+//CLEAR_ALL_DATA
+export const clearAllDataAction = () => {
+  return {
+    type: CLEAR_ALL_DATA,
   };
 };

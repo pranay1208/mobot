@@ -1,18 +1,26 @@
 import { combineReducers } from "redux";
 
 //Import all reducers
-import testReducer from "./testReducer";
 import {
   coursesReducer,
   credentialReducer,
   notificationsDurationReducer,
 } from "./settingsReducers";
+import {
+  moduleReducer,
+  dashboardReducer,
+  sectionsReducer,
+} from "./moduleReducer";
+import notificationReducer from "./notificationReducer";
 
 const rootReducer = combineReducers({
-  test: testReducer,
   credentials: credentialReducer,
   courses: coursesReducer,
   notificationDurations: notificationsDurationReducer,
+  modules: moduleReducer,
+  dashboard: dashboardReducer,
+  notifications: notificationReducer,
+  sections: sectionsReducer,
 });
 
 export default rootReducer;

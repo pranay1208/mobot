@@ -115,7 +115,10 @@ export const RemovedCourseSectionItem = ({
   pressAction,
 }: RemovedCourseSectionItemInterface) => {
   return (
-    <Pressable onPress={() => pressAction(resource.resourceUrl, resource.name)}>
+    <Pressable
+      onPress={() => pressAction(resource.resourceUrl, resource.name)}
+      onLongPress={() => pressAction(resource.resourceUrl, resource.name)}
+    >
       <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='grey.500'>
         <HStack space={3}>
           {getIconFromModuleType(resource.type)}

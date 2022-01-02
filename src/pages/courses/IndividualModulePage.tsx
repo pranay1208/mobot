@@ -95,11 +95,13 @@ const IndividualModulePage = ({ route, navigation }: Props) => {
           </Text>
         </Box>
       )}
-      <Link isExternal href={resourceUrl} marginY='2'>
-        <Button colorScheme='emerald' width='100%'>
-          View in Moodle
-        </Button>
-      </Link>
+      {resource.removedFromMoodle || (
+        <Link isExternal href={resourceUrl} marginY='2'>
+          <Button colorScheme='emerald' width='100%'>
+            View in Moodle
+          </Button>
+        </Link>
+      )}
       <Button
         colorScheme='danger'
         marginY='2'

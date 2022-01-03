@@ -12,6 +12,11 @@ export type CourseRouterParamList = {
   Module: IndividualModulePageParam;
 };
 
+export type DeadlineRouterParamList = {
+  Overview: undefined;
+  Module: IndividualModulePageParam;
+};
+
 interface SettingsParams {
   openCreds: boolean;
   openCourses: boolean;

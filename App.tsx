@@ -15,6 +15,7 @@ import { PRIMARY_BLUE } from "./src/colours.styles";
 import SettingsPage from "./src/pages/settings/SettingsPage";
 import HomePage from "./src/pages/home/HomePage";
 import CourseRouter from "./src/pages/courses/CourseRouter";
+import DeadlineRouter from "./src/pages/deadlines/DeadlineRouter";
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
@@ -50,6 +51,15 @@ function AppContent() {
             options={{
               drawerIcon: ({ color, size }) => (
                 <Ionicons name='book' color={color} size={size} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name='Deadlines'
+            component={DeadlineRouter}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <Ionicons name='alarm' color={color} size={size} />
               ),
             }}
           />

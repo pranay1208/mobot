@@ -31,10 +31,13 @@ const DeadlinePage = ({ navigation }: Props) => {
         onDayPress={day => {
           console.log('selected day', day);
         }}
-        pastScrollRange={0}
+        pastScrollRange={5}
         futureScrollRange={5}
         markingType={'multi-dot'}
         markedDates={dates}
+        theme={{
+          dotStyle: {width: 8, height: 8},
+        }}
       />
     </Box>
   );

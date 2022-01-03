@@ -124,12 +124,15 @@ const projectData = (
         userMarkedCompleted: curr.userMarkedCompleted,
         userMarkedDeleted: curr.userMarkedDeleted,
       };
+      if (!curr.completed && updt.completed) {
+        completed.push(appDataVersion);
+      } else if (curr.completed && !updt.completed) {
+        appDataVersion.userMarkedCompleted = updt.completed;
+      }
       if (moduleHasBeenModified(curr, updt)) {
         modified.push(appDataVersion);
       }
-      if (!curr.completed && updt.completed) {
-        completed.push(appDataVersion);
-      }
+
       finalProj.push(appDataVersion);
       currentIndex += 1;
       updatedIndex += 1;

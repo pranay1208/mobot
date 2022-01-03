@@ -15,16 +15,19 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pranay1208.mobot"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/android-chrome-192x192.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.pranay1208.mobot"
     },
     "web": {
       "favicon": "./assets/favicon-32x32.png"
-    }
+    },
+    "plugins": ["@notifee/react-native"]
   }
 }

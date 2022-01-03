@@ -31,7 +31,9 @@ const pushNotificationReducer = async (
 ): Promise<PushNotificationData[]> => {
   let newState: PushNotificationData[];
   switch (action.type) {
+    // fires when user adds a new notification duration (e.g. - 5 days)
     case ADD_NEW_NOTIFICATION:
+      //a map of deadlines for unique resources
       const uniqueDeadlines: Record<string, PushNotificationData> = {};
       state.forEach((notif) => {
         if (notif.resourceUrl in uniqueDeadlines) {
@@ -57,6 +59,7 @@ const pushNotificationReducer = async (
         })
       );
       return [...state, ...newNotifications];
+    // fires when user removes a notification duration (e.g. - 5 days)
     case DELETE_NOTIFICATION:
       newState = await Promise.all(
         state.filter(async (notif) => {
@@ -71,6 +74,7 @@ const pushNotificationReducer = async (
     case CLEAR_ALL_DATA:
       await cancellAllNotifications();
       return [];
+    // fires when user deletes a course
     case DELETE_COURSE:
       newState = await Promise.all(
         state.filter(async (notif) => {
@@ -82,33 +86,40 @@ const pushNotificationReducer = async (
         })
       );
       return newState;
+    // fires when we request data from moodle scraper and have performed projection
     case REFRESH_UPDATE_NOTIFICATION:
       newState = [...state];
       const notifDurations = action.payload.notifDurations as number[];
 
       const modifDeadlines = action.payload
         .modDeadlines as DeadlineNotifInformation[];
+      //first delete all notifications that have been modified
       modifDeadlines.forEach(async (ddl) => {
         newState = await Promise.all(
           newState.filter(async (notif) => {
             if (notif.resourceUrl !== ddl.resourceUrl) {
               return true;
             }
-            cancelTriggerNotification(notif.notificationId);
+            await cancelTriggerNotification(notif.notificationId);
             return false;
           })
         );
       });
+      //next create new notifications (modified notifications are included in this as well)
       const newDeadlines = action.payload
         .newDeadlines as DeadlineNotifInformation[];
-      const newDdlNotifs: PushNotificationData[] = (
-        await Promise.all(
-          newDeadlines.map(
-            async (ddl) => await makeNewDeadlineNotifs(ddl, notifDurations)
-          )
+      // list of notifications (1 for each duration) for each newly found notification
+      const newDdlNotifs: PushNotificationData[][] = await Promise.all(
+        newDeadlines.map(
+          async (ddl) => await makeNewDeadlineNotifs(ddl, notifDurations)
         )
-      ).reduce((prev, curr) => [...prev, ...curr], []);
-      newState.push(...newDdlNotifs);
+      );
+      //flatten the list of notifications
+      const flattenedList = newDdlNotifs.reduce(
+        (prev, curr) => [...prev, ...curr],
+        []
+      );
+      newState.push(...flattenedList);
       return newState;
     default:
       //clear out records that are not necessary anymore
@@ -129,12 +140,20 @@ const makeNewDeadlineNotifs = async (
         new Date().getTime(),
         ddl.dueDate - num * DAY_IN_MS
       );
-      await createTriggerNotification({
+      const notificationInfo: PushNotificationDetails = {
         timestamp: dateAvailable,
         title: "Deadline alert!",
         body: `Submission due in ${num} days for ${ddl.courseName}`,
-      });
-      return {} as any as PushNotificationData;
+      };
+      const notifId = await createTriggerNotification(notificationInfo);
+      return {
+        notificationDate: dateAvailable,
+        resourceUrl: ddl.resourceUrl,
+        numDaysBeforeDeadline: num,
+        courseUrl: ddl.courseUrl,
+        notificationId: notifId,
+        notificationInfo: notificationInfo,
+      };
     })
   );
   return createdNotifications;

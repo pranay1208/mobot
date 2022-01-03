@@ -25,7 +25,7 @@ const DeadlinePage = ({ navigation }: Props) => {
 
   const dates: Record<string, {dots: Dot[]}> = {}
   for(let i=0; i<deadlines.length; i++) {
-    if (deadlines[i].dueDate !== null) {
+    if ((deadlines[i].dueDate !== null) && (!deadlines[i].removedFromMoodle) && (!deadlines[i].userMarkedDeleted)) {
       var formattedDueDate = new Date(deadlines[i].dueDate).toISOString().split('T')[0]
       dates[formattedDueDate] = {dots: []}
       dates[formattedDueDate].dots.push({key: deadlines[i].courseUrl, color: courseUrlToColors[deadlines[i].courseUrl]})

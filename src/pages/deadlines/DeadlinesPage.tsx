@@ -12,33 +12,29 @@ const DeadlinePage = ({ navigation }: Props) => {
   const modules = useAppSelector((state) => state.modules);
   const courses = useAppSelector((state) => state.courses);
   const deadlines = modules.filter((mod) => isAssignment(mod.type));
-  // const data: CourseCardProps[] = [
-  //   {
-  //     courseTitle: "STAT1603: Introduction to Statistics",
-  //     courseAlerts: 5,
-  //     numberAssignments: 4,
-  //     numberQuizzes: 1,
-  //     numberResources: 33,
-  //     totalModules: 42,
-  //     completedModules: 35,
-  //   },
-  // ];
 
-  const vacation = {key: 'vacation', color: 'red'};
-  const massage = {key: 'massage', color: 'blue'};
-  const workout = {key: 'workout', color: 'green'};
-  
+  const courseUrlToColors = {}
+  for(let i=0; i<courses.length; i++) {
+    courseUrlToColors[courses[i].courseUrl] = courses[i].courseColor
+  }
+
+  const dates = {}
+  for(let i=0; i<deadlines.length; i++) {
+    var formattedDueDate = new Date(deadlines[i].dueDate).toISOString().split('T')[0]
+    dates[formattedDueDate] = {dots: []}
+    dates[formattedDueDate].dots.push({key: deadlines[i].courseUrl, color: courseUrlToColors[deadlines[i].courseUrl]})
+  }
+
   return (
     <Box flex='1'>
       <CalendarList
         onDayPress={day => {
           console.log('selected day', day);
         }}
+        pastScrollRange={0}
+        futureScrollRange={5}
         markingType={'multi-dot'}
-        markedDates={{
-          '2022-01-04': {dots: [vacation, massage, workout]},
-          '2022-01-03': {dots: [massage, workout]}
-        }}
+        markedDates={dates}
       />
     </Box>
   );

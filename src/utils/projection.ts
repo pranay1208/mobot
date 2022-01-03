@@ -116,8 +116,10 @@ const projectData = (
     const updt = updated[updatedIndex];
     if (curr.resourceUrl === updt.resourceUrl) {
       //updt could have been modified
+      let dueDate = updt.dueDate ?? curr.dueDate;
       const appDataVersion: AppCourseData = {
         ...updt,
+        dueDate,
         removedFromMoodle: false,
         userMarkedCompleted: curr.userMarkedCompleted,
         userMarkedDeleted: curr.userMarkedDeleted,

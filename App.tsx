@@ -13,9 +13,9 @@ import NotificationListPage from "./src/pages/notifications/NotificationListPage
 import AppDrawer from "./src/components/AppDrawer";
 import { PRIMARY_BLUE } from "./src/colours.styles";
 import SettingsPage from "./src/pages/settings/SettingsPage";
-import DeadlinesPage from "./src/pages/deadlines/DeadlinesPage";
 import HomePage from "./src/pages/home/HomePage";
 import CourseRouter from "./src/pages/courses/CourseRouter";
+import DeadlineRouter from "./src/pages/deadlines/DeadlineRouter";
 
 const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
@@ -25,7 +25,7 @@ function AppContent() {
     <NativeBaseProvider>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName='Home'
+          initialRouteName='Deadlines'
           drawerContent={(props) => <AppDrawer {...props} />}
           screenOptions={{
             headerTintColor: "#FFF",
@@ -56,7 +56,7 @@ function AppContent() {
           />
           <Drawer.Screen
             name='Deadlines'
-            component={DeadlinesPage}
+            component={DeadlineRouter}
             options={{
               drawerIcon: ({ color, size }) => (
                 <Ionicons name='alarm' color={color} size={size} />

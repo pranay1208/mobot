@@ -121,7 +121,7 @@ const projectData = (
         ...updt,
         dueDate,
         removedFromMoodle: false,
-        userMarkedCompleted: curr.userMarkedCompleted,
+        userMarkedCompleted: curr.userMarkedCompleted || updt.completed,
         userMarkedDeleted: curr.userMarkedDeleted,
       };
       if (!curr.completed && updt.completed) {

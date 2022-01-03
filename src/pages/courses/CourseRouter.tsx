@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { CourseRouterParamList } from "../../interfaces/navigatorInterfaces";
 import MainCoursePage from "./MainCoursePage";
 import IndividualCoursePage from "./IndividualCoursePage";
-import IndividualModulePage from "./IndividualModulePage";
+import IndividualModulePage from "../common/IndividualModulePage";
 
 const Stack = createStackNavigator<CourseRouterParamList>();
 

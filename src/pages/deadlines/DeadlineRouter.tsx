@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { DeadlineRouterParamList } from "../../interfaces/navigatorInterfaces";
-import IndividualModulePage from "../courses/IndividualModulePage";
+import IndividualModulePage from "../common/IndividualModulePage";
 import DeadlinePage from "./DeadlinesPage";
 
 const Stack = createStackNavigator<DeadlineRouterParamList>();

@@ -2,14 +2,19 @@ import React from "react";
 import { Button, HStack, VStack, Text, Box, Link } from "native-base";
 import { BACKGROUND_WHITE } from "../../colours.styles";
 import { StackScreenProps } from "@react-navigation/stack";
-import { CourseRouterParamList } from "../../interfaces/navigatorInterfaces";
+import {
+  CourseRouterParamList,
+  DeadlineRouterParamList,
+} from "../../interfaces/navigatorInterfaces";
 import { useAppDispatch, useAppSelector } from "../../redux";
 import {
   toggleCompletionAction,
   toggleRemovalAction,
 } from "../../redux/actions/moduleActions";
 
-type Props = StackScreenProps<CourseRouterParamList, "Module">;
+type Props =
+  | StackScreenProps<CourseRouterParamList, "Module">
+  | StackScreenProps<DeadlineRouterParamList, "Module">;
 
 const IndividualModulePage = ({ route, navigation }: Props) => {
   const dispatch = useAppDispatch();

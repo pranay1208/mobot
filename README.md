@@ -30,6 +30,12 @@ By clicking into a course, one can view all the modules on Moodle for that cours
 
 <img src='./assets/screens/module.png' width='420' height='730'>
 
+## Deadlines
+
+Track your submission due dates with the deadline calendars
+
+<img src='./assets/screens/deadlines.png' width='420' height='730'>
+
 ## User Settings
 
 Users can add up to **6 courses** at a time. Simply copy paste the course's Moodle URL into the app and give it a name to reference it by.

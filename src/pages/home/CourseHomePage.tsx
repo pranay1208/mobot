@@ -7,7 +7,11 @@ import { useAppSelector } from "../../redux";
 import ScrapeProgressModal, {
   REFRESH_STATE,
 } from "../../components/home/ScrapeProgressModal";
-import { fetchRefreshedData } from "../../utils/api";
+import {
+  encryptPassword,
+  fetchRefreshedData,
+  getPublicKey,
+} from "../../utils/api";
 import updateModules from "../../utils/projection";
 import { DrawerScreenProps } from "@react-navigation/drawer";
 import { RootDrawerParamList } from "../../interfaces/navigatorInterfaces";
@@ -41,7 +45,6 @@ const CourseHomePage = ({ navigation }: Props) => {
         onPress={async () => {
           try {
             setOpenScrapeModal(true);
-            setRefreshState(REFRESH_STATE.FETCHING);
             if (username === "" || password === "") {
               navigation.navigate("Settings", {
                 openAbout: false,
@@ -51,7 +54,14 @@ const CourseHomePage = ({ navigation }: Props) => {
               });
               return;
             }
-            const scrapedData = await fetchRefreshedData(username, password);
+            setRefreshState(REFRESH_STATE.ENCRYPTING);
+            const publicKey = await getPublicKey();
+            const encryptedPwd = await encryptPassword(password, publicKey);
+            setRefreshState(REFRESH_STATE.FETCHING);
+            const scrapedData = await fetchRefreshedData(
+              username,
+              encryptedPwd
+            );
             setRefreshState(REFRESH_STATE.PROJECTING);
             await updateModules(scrapedData);
             setRefreshState(REFRESH_STATE.COMPLETE);

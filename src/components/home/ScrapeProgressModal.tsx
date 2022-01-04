@@ -3,6 +3,7 @@ import React from "react";
 import { CommonModalHeader } from "../common/ModalCommons";
 
 export enum REFRESH_STATE {
+  ENCRYPTING,
   FETCHING,
   PROJECTING,
   COMPLETE,
@@ -12,6 +13,8 @@ export enum REFRESH_STATE {
 
 const getAppropriateText = (state: REFRESH_STATE): string => {
   switch (state) {
+    case REFRESH_STATE.ENCRYPTING:
+      return "Encrypting credentials...";
     case REFRESH_STATE.FETCHING:
       return "Fetching data now...";
     case REFRESH_STATE.PROJECTING:

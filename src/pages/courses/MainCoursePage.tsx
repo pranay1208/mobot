@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, FlatList, Text } from "native-base";
+import { Box, FlatList, ScrollView, Text } from "native-base";
 import CourseCard, {
   CourseCardProps,
 } from "../../components/courses/CourseCard";
@@ -65,15 +65,17 @@ const MainCoursePage = ({ navigation }: Props) => {
     };
   });
   return (
-    <Box paddingY='4'>
-      <FlatList
-        keyExtractor={(item, index) => index.toString()}
-        data={data}
-        renderItem={({ item }) => {
-          return CourseCard(item);
-        }}
-      />
-    </Box>
+    <ScrollView>
+      <Box paddingY='4'>
+        <FlatList
+          keyExtractor={(item, index) => index.toString()}
+          data={data}
+          renderItem={({ item }) => {
+            return CourseCard(item);
+          }}
+        />
+      </Box>
+    </ScrollView>
   );
 };
 

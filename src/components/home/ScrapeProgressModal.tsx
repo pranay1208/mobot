@@ -16,7 +16,7 @@ const getAppropriateText = (state: REFRESH_STATE): string => {
     case REFRESH_STATE.ENCRYPTING:
       return "Encrypting credentials...";
     case REFRESH_STATE.FETCHING:
-      return "Fetching data now...";
+      return "Fetching data, this usually takes 10 to 30 seconds...";
     case REFRESH_STATE.PROJECTING:
       return "Received data. Updating app...";
     case REFRESH_STATE.COMPLETE:

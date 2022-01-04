@@ -3,8 +3,7 @@ import NodeRSA from "node-rsa";
 import { ScrapeResponse } from "../interfaces/apiInterface";
 import { reduxStore } from "../redux";
 
-// const API_URL = "http://10.0.2.2:8080";
-const API_URL = "http://localhost:8080";
+const API_URL = "https://mobotapi.herokuapp.com";
 
 export const getPublicKey = async (): Promise<string> => {
   const response: AxiosResponse<string> = await axios.get(`${API_URL}`);

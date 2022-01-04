@@ -178,7 +178,7 @@ const moduleHasBeenModified = (
   //we do not care about completion status as a form of modification
   return (
     curr.name !== updt.name ||
-    curr.dueDate !== updt.dueDate ||
+    (curr.dueDate !== updt.dueDate && updt.dueDate !== null) ||
     curr.sectionTitle !== updt.sectionTitle ||
     curr.comments !== updt.comments
   );

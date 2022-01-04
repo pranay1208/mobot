@@ -12,6 +12,8 @@ Mobot stores all course-related, non-sensitive information locally on your devic
 
 User credentials are not saved on device for security purposes. You will be prompted to input your credentials for each app session.
 
+User credentials, used for fetching course information, are sent encrypted to ensure safety.
+
 ## Dashboard
 
 The dashboard page displays key information from each refresh. Performing a refresh will update the course content on your device and display the changes made.

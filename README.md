@@ -1,26 +1,38 @@
 # Mobot
 
-Mobot is a mobile application that allows you to keep track of your HKU Moodle content. This includes keeping track of your coursework as well as assignment deadlines. Mobot retrieves your information by reverse engineering Moodle and scraping the HTMLs returned from HKU's HTTP server.
+ℹ️ Mobot is a mobile application that syncs coursework from HKU's Moodle and allows students to keep track of their coursework and submissions via 
+
+❔ The motivation behind this project was to keep track of assignments and get personalised notifications to stay on top of university coursework. 
+
+:x: HKU's Moodle is clunky and cluttered. Searching through it everyday for updates to course content is painstaking and time-consuming
+
+✔️ Mobot uses web-scraping to retrieve your courses' information (in under 30 seconds) and shows you updates to their content, as well as helps in better visualising submissions and deadlines
+
+⏰ Mobot allows you to add up to 6 courses, and set multiple reminders for submissions, letting you stay up-to-date with all upcoming assignments.
+
+---
 
 <div style = "text-align:center">
     <img src='./assets/Mobot.png'>
 </div>
 
-## Data Usage
+---
 
-Mobot stores all course-related, non-sensitive information locally on your device. No user data is stored.
+## 👁️‍🗨️ Data Usage
+
+Mobot stores all course-related, non-sensitive information locally on your device. No user data is stored by Mobot.
 
 User credentials are not saved on device for security purposes. You will be prompted to input your credentials for each app session.
 
 User credentials, used for fetching course information, are sent encrypted to ensure safety.
 
-## Dashboard
+## 🏠 Dashboard
 
 The dashboard page displays key information from each refresh. Performing a refresh will update the course content on your device and display the changes made.
 
 <img src='./assets/screens/dashboard.png' width='420' height='730'>
 
-## Courses
+## 📚 Courses
 
 The courses page gives you an overview of your courses.
 
@@ -32,13 +44,13 @@ By clicking into a course, one can view all the modules on Moodle for that cours
 
 <img src='./assets/screens/module.png' width='420' height='730'>
 
-## Deadlines
+## ⏰ Deadlines
 
 Track your submission due dates with the deadline calendars
 
 <img src='./assets/screens/deadlines.png' width='420' height='730'>
 
-## User Settings
+## 👤 User Settings
 
 Users can add up to **6 courses** at a time. Simply copy paste the course's Moodle URL into the app and give it a name to reference it by.
 

@@ -46,5 +46,7 @@
     "typescript": "~4.3.5"
   },
   "private": true,
-  "proxy": "https://moodle.hku.hk"
+  "proxy": "https://moodle.hku.hk",
+  "name": "mobot",
+  "version": "1.0.0"
 }

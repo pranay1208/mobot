@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "primaryColor": "#1A5FA1",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -21,7 +22,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/android-chrome-192x192.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.pranay1208.mobot",
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon-32x32.png"

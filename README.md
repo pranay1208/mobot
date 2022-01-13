@@ -1,8 +1,8 @@
 # Mobot
 
-ℹ️ Mobot is a mobile application that syncs coursework from HKU's Moodle and allows students to keep track of their coursework and submissions via 
+ℹ️ Mobot is a mobile application that syncs coursework from HKU's Moodle and allows students to keep track of their coursework and submissions.
 
-❔ The motivation behind this project was to keep track of assignments and get personalised notifications to stay on top of university coursework. 
+❔ The motivation behind this project was to keep track of assignments and get personalised notifications to stay on top of university coursework.
 
 :x: HKU's Moodle is clunky and cluttered. Searching through it everyday for updates to course content is painstaking and time-consuming
 
@@ -23,8 +23,6 @@
 Mobot stores all course-related, non-sensitive information locally on your device. No user data is stored by Mobot.
 
 User credentials are not saved on device for security purposes. You will be prompted to input your credentials for each app session.
-
-User credentials, used for fetching course information, are sent encrypted to ensure safety.
 
 ## 🏠 Dashboard
 

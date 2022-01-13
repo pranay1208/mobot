@@ -8,7 +8,7 @@ import ScrapeProgressModal, {
   REFRESH_STATE,
 } from "../../components/home/ScrapeProgressModal";
 import {
-  encryptPassword,
+  // encryptPassword,
   fetchRefreshedData,
   getPublicKey,
 } from "../../utils/api";
@@ -54,14 +54,11 @@ const CourseHomePage = ({ navigation }: Props) => {
               });
               return;
             }
-            setRefreshState(REFRESH_STATE.ENCRYPTING);
-            const publicKey = await getPublicKey();
-            const encryptedPwd = await encryptPassword(password, publicKey);
+            // setRefreshState(REFRESH_STATE.ENCRYPTING);
+            // const publicKey = await getPublicKey();
+            // const encryptedPwd = await encryptPassword(password, publicKey);
             setRefreshState(REFRESH_STATE.FETCHING);
-            const scrapedData = await fetchRefreshedData(
-              username,
-              encryptedPwd
-            );
+            const scrapedData = await fetchRefreshedData(username, password);
             setRefreshState(REFRESH_STATE.PROJECTING);
             await updateModules(scrapedData);
             setRefreshState(REFRESH_STATE.COMPLETE);

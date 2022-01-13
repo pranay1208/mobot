@@ -84,7 +84,7 @@ export const CourseSectionItem = ({
       onLongPress={() => longPressAction(resource.resourceUrl, resource.name)}
       onPress={() => pressAction(resource.resourceUrl)}
     >
-      <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='grey.500'>
+      <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='gray.500'>
         <HStack space={3}>
           {getIconFromModuleType(resource.type)}
           <Text fontSize='lg' fontWeight='semibold' flex='1' isTruncated>
@@ -119,7 +119,7 @@ export const RemovedCourseSectionItem = ({
       onPress={() => pressAction(resource.resourceUrl, resource.name)}
       onLongPress={() => pressAction(resource.resourceUrl, resource.name)}
     >
-      <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='grey.500'>
+      <Box paddingX='3' paddingY='1' borderWidth='1' borderColor='gray.500'>
         <HStack space={3}>
           {getIconFromModuleType(resource.type)}
           <VStack flex='1'>

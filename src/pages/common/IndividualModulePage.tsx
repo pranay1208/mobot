@@ -102,7 +102,7 @@ const IndividualModulePage = ({ route, navigation }: Props) => {
       )}
       {resource.removedFromMoodle || (
         <Link isExternal href={resourceUrl} marginY='2'>
-          <Button colorScheme='emerald' width='100%'>
+          <Button colorScheme='emerald' width='100%' disabled={true}>
             View in Moodle
           </Button>
         </Link>

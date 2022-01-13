@@ -33,6 +33,9 @@ export const getCourseUpdateText = (
       nonImpUpdates += 1;
     }
   });
+  if (impUpdates.length === 0) {
+    return [`${nonImpUpdates} resources`];
+  }
   if (impUpdates.length >= 6) {
     return [
       ...impUpdates.slice(0, 6),

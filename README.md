@@ -1,5 +1,7 @@
 # Mobot
 
+Get the latest build from here for [Android](./build/android) or [iOS](./build/ios)
+
 ℹ️ Mobot is a mobile application that syncs coursework from HKU's Moodle and allows students to keep track of their coursework and submissions.
 
 ❔ The motivation behind this project was to keep track of assignments and get personalised notifications to stay on top of university coursework.

@@ -12,14 +12,16 @@ import {
   sectionsReducer,
 } from "./moduleReducer";
 import notificationReducer from "./notificationReducer";
+import pushNotificationReducer from "./pushNotifReducer";
 
 const rootReducer = combineReducers({
   credentials: credentialReducer,
   courses: coursesReducer,
-  notificationDurations: notificationsDurationReducer,
-  modules: moduleReducer,
   dashboard: dashboardReducer,
+  modules: moduleReducer,
   notifications: notificationReducer,
+  notificationDurations: notificationsDurationReducer,
+  pushNotifications: pushNotificationReducer,
   sections: sectionsReducer,
 });
 

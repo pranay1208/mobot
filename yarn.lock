@@ -1285,6 +1285,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
+"@notifee/react-native@^4.0.1":
+  "integrity" "sha512-vkRJnDMg7z21APm6RytD6ddHk4Og+zro/V0/Fk2a3Hvk1apDfSDXo1n4e3S+WPqsJEJSCXVGkRNWxam9Wq22sQ=="
+  "resolved" "https://registry.npmjs.org/@notifee/react-native/-/react-native-4.0.1.tgz"
+  "version" "4.0.1"
+
 "@react-aria/checkbox@^3.2.1":
   "integrity" "sha512-bLNdVefKGFA2+QT84htWHYUpxLqA5r3L4q6ilBLOzcRiKpgQM2OW2bQGLN6Zw26MKjmTzEMrR2Db+a/O5e1fUQ=="
   "resolved" "https://registry.npmjs.org/@react-aria/checkbox/-/checkbox-3.2.3.tgz"
